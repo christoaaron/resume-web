@@ -20,55 +20,33 @@ export function AdvancedTimeline({ items }: { items: TimelineItemProps[] }) {
                         "relative flex flex-col md:flex-row gap-8 md:gap-0 pb-12 last:pb-0",
                         index % 2 === 0 ? "md:flex-row-reverse" : ""
                     )}>
-                        {/* Upper Line (Connects from previous) - Optimized with ScaleY */}
+                        {/* Upper Line (Connects from previous) */}
                         {index !== 0 && (
-                            <motion.div
-                                initial={{ scaleY: 0 }}
-                                whileInView={{ scaleY: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: index * 0.2 }}
-                                className="absolute left-6 md:left-1/2 top-0 h-[1.375rem] w-px bg-border -translate-x-1/2 md:block block origin-top"
+                            <div
+                                className="absolute left-6 md:left-1/2 top-0 h-[1.375rem] w-px bg-border -translate-x-1/2 md:block block"
                             />
                         )}
 
-                        {/* Lower Line (Connects to next) - Optimized with ScaleY */}
+                        {/* Lower Line (Connects to next) */}
                         {index !== items.length - 1 && (
-                            <motion.div
-                                initial={{ scaleY: 0 }}
-                                whileInView={{ scaleY: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: index * 0.2 + 0.2 }}
-                                className="absolute left-6 md:left-1/2 top-[1.375rem] bottom-0 w-px bg-border -translate-x-1/2 md:block block origin-top"
+                            <div
+                                className="absolute left-6 md:left-1/2 top-[1.375rem] bottom-0 w-px bg-border -translate-x-1/2 md:block block"
                             />
                         )}
 
                         {/* Timeline Dot */}
-                        <motion.div
-                            initial={{ scale: 0 }}
-                            whileInView={{ scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.4, delay: index * 0.2 }}
+                        <div
                             className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-background border-2 border-primary -translate-x-1/2 mt-1.5 z-10 shadow-[0_0_0_4px_rgba(var(--background),1)]"
                         />
 
                         {/* Content Side */}
                         <div className="md:w-1/2 md:px-12 pl-12">
-                            <motion.div
-                                initial={{ opacity: 0, x: index % 2 === 0 ? 20 : -20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.2 + 0.1 }}
-                                className="bg-card border border-border p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow relative"
-                            >
-                                {/* Connecting Line to Dot (Horizontal) - Optimized with ScaleX */}
-                                <motion.div
-                                    initial={{ scaleX: 0 }}
-                                    whileInView={{ scaleX: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.4, delay: index * 0.2 + 0.2 }}
+                            <div className="bg-card border border-border p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow relative">
+                                {/* Connecting Line to Dot (Horizontal) */}
+                                <div
                                     className={cn(
                                         "hidden md:block absolute top-3.5 h-px bg-border w-12",
-                                        index % 2 === 0 ? "-left-12 origin-right" : "-right-12 origin-left"
+                                        index % 2 === 0 ? "-left-12" : "-right-12"
                                     )}
                                 />
 
@@ -94,7 +72,7 @@ export function AdvancedTimeline({ items }: { items: TimelineItemProps[] }) {
                                         📍 {item.location}
                                     </div>
                                 )}
-                            </motion.div>
+                            </div>
                         </div>
 
                         {/* Empty Side for layout balance */}

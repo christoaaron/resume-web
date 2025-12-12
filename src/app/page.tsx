@@ -77,7 +77,6 @@ export default async function Home() {
       <footer className="py-8 text-center text-muted-foreground text-sm border-t border-border">
         © {new Date().getFullYear()} {profile.name}.
       </footer>
-      <AnimatedBackground />
     </main>
   );
 }
