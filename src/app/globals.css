@@ -80,16 +80,6 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-[data-theme="dark"] {
-  --background: #09090b;
-  --foreground: #fafafa;
-  --primary: #f4f4f5;
-  --primary-foreground: #18181b;
-  --secondary: #a1a1aa;
-  --muted: #18181b;
-  --border: #27272a;
-}
-
 body {
   background-color: var(--background);
   font-family: var(--font-jakarta), sans-serif;
@@ -98,11 +88,12 @@ body {
 }
 
 ::selection {
-  background: var(--foreground);
-  color: var(--background);
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
-.dark {
+.dark,
+[data-theme="dark"] {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -140,6 +131,7 @@ body {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
