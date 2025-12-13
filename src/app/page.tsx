@@ -81,13 +81,20 @@ export default async function Home() {
       profile.instagram
     ].filter(Boolean),
     description: profile.bio
-  }
+  };
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Christopher Aaron Portfolio',
+    url: baseUrl,
+  };
 
   return (
     <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, websiteJsonLd]) }}
       />
       <Navbar name={cleanProfile.name} />
       <Hero name={cleanProfile.name} headline={cleanProfile.headline} />

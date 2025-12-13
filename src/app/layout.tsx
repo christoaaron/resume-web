@@ -18,6 +18,9 @@ export const metadata: Metadata = {
     default: "Christopher Aaron | Tourism, Marketing & Business Administration Professional",
     template: "%s | Christopher Aaron",
   },
+  alternates: {
+    canonical: "/",
+  },
   description: "Portfolio of Christopher Aaron, a dedicated Tourism, Marketing, and Business Administration graduate. Skilled in digital marketing, project management, and customer relations.",
   keywords: [
     // Personal Brand
@@ -55,7 +58,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://mausukses.com", // Placeholder, user should update
+    url: "https://christopheraaron.vercel.app",
     title: "Christopher Aaron | Tourism, Marketing & Business Administration Portfolio",
     description: "Explore the professional portfolio of Christopher Aaron, featuring skills in tourism management, digital marketing, and business administration.",
     siteName: "Christopher Aaron Portfolio",
