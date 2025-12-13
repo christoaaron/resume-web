@@ -11,11 +11,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 password: { label: "Password", type: "password" },
             },
             authorize: async (credentials) => {
-                // Hardcoded admin for "Admin Page" requirement
-                // ideally move to env vars: process.env.ADMIN_USER, process.env.ADMIN_PASS
+                const adminUser = process.env.ADMIN_USER || "admin";
+                const adminPassword = process.env.ADMIN_PASSWORD || "password123";
+
                 if (
-                    credentials?.username === "admin" &&
-                    credentials?.password === "password123" // Change this!
+                    credentials?.username === adminUser &&
+                    credentials?.password === adminPassword
                 ) {
                     return { id: "1", name: "Christopher Aaron", email: "admin@example.com" }
                 }

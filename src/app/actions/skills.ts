@@ -101,6 +101,8 @@ export async function toggleSkillFeatured(id: string) {
 const CertificationSchema = z.object({
     name: z.string().min(1, "Certification name is required"),
     link: z.string().optional(),
+    issuedAt: z.string().optional(),
+    expiresAt: z.string().optional(),
 });
 
 export async function createCertification(prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -108,6 +110,8 @@ export async function createCertification(prevState: ActionState, formData: Form
         const rawData = {
             name: formData.get("name"),
             link: formData.get("link"),
+            issuedAt: formData.get("issuedAt"),
+            expiresAt: formData.get("expiresAt"),
         };
 
         const validatedFields = CertificationSchema.safeParse(rawData);
@@ -120,6 +124,8 @@ export async function createCertification(prevState: ActionState, formData: Form
             data: {
                 name: validatedFields.data.name,
                 link: validatedFields.data.link || null,
+                issuedAt: validatedFields.data.issuedAt ? new Date(validatedFields.data.issuedAt) : null,
+                expiresAt: validatedFields.data.expiresAt ? new Date(validatedFields.data.expiresAt) : null,
             },
         });
 
@@ -137,6 +143,8 @@ export async function updateCertification(id: string, prevState: ActionState, fo
         const rawData = {
             name: formData.get("name"),
             link: formData.get("link"),
+            issuedAt: formData.get("issuedAt"),
+            expiresAt: formData.get("expiresAt"),
         };
 
         const validatedFields = CertificationSchema.safeParse(rawData);
@@ -150,6 +158,8 @@ export async function updateCertification(id: string, prevState: ActionState, fo
             data: {
                 name: validatedFields.data.name,
                 link: validatedFields.data.link || null,
+                issuedAt: validatedFields.data.issuedAt ? new Date(validatedFields.data.issuedAt) : null,
+                expiresAt: validatedFields.data.expiresAt ? new Date(validatedFields.data.expiresAt) : null,
             },
         });
 

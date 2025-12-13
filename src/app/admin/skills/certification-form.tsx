@@ -53,6 +53,28 @@ export function CertificationForm({ initialData }: CertificationFormProps) {
                     />
                 </div>
 
+                <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Issued Date (Optional)</label>
+                        <input
+                            type="date"
+                            name="issuedAt"
+                            defaultValue={initialData?.issuedAt ? new Date(initialData.issuedAt).toISOString().split('T')[0] : ""}
+                            className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Expiration Date (Optional)</label>
+                        <input
+                            type="date"
+                            name="expiresAt"
+                            defaultValue={initialData?.expiresAt ? new Date(initialData.expiresAt).toISOString().split('T')[0] : ""}
+                            className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
+                        />
+                    </div>
+                </div>
+
                 <div className="pt-4">
                     <button
                         type="submit"

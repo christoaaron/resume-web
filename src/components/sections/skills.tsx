@@ -32,7 +32,15 @@ export default function Skills({ skills, certifications }: {
                                 <Card key={index} delay={index * 0.1} className="py-4 px-6 flex items-center gap-3 group">
                                     <div className="w-2 h-2 rounded-full bg-green-500" />
                                     <div className="flex-1">
-                                        <span className="font-medium text-foreground">{cert.name}</span>
+                                        <span className="font-medium text-foreground block">{cert.name}</span>
+                                        <div className="text-xs text-muted-foreground mt-0.5 space-x-2">
+                                            {cert.issuedAt && (
+                                                <span>Issued: {new Date(cert.issuedAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                            )}
+                                            {cert.expiresAt && (
+                                                <span>• Expires: {new Date(cert.expiresAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                            )}
+                                        </div>
                                     </div>
                                     {cert.link && (
                                         <a

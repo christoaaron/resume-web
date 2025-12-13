@@ -53,8 +53,12 @@ export default async function Home() {
   const cleanEducation = educationData.map(({ createdAt, updatedAt, ...item }) => item);
   const cleanOrganizations = organizationsData.map(({ createdAt, updatedAt, ...item }) => item);
   const cleanProjects = projectsData.map(({ createdAt, updatedAt, ...item }) => item);
+
+  const allHardSkills = skillsData.hard.map(({ createdAt, updatedAt, ...item }) => item);
+  const featuredHardSkills = allHardSkills.filter(s => s.featured);
+
   const cleanSkills = {
-    hard: skillsData.hard.filter(s => s.featured).map(({ createdAt, updatedAt, ...item }) => item),
+    hard: allHardSkills,
     soft: skillsData.soft.map(({ createdAt, updatedAt, ...item }) => item),
   };
   const cleanCertifications = certificationsData.map(({ createdAt, updatedAt, ...item }) => item);
@@ -66,7 +70,7 @@ export default async function Home() {
     <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Navbar name={cleanProfile.name} />
       <Hero name={cleanProfile.name} headline={cleanProfile.headline} />
-      <About bio={cleanProfile.bio} skills={cleanSkills.hard} />
+      <About bio={cleanProfile.bio} skills={featuredHardSkills} />
       <Experience data={cleanExperience} />
       <Education data={cleanEducation} />
       <Organizations data={cleanOrganizations} />
@@ -77,7 +81,6 @@ export default async function Home() {
       <footer className="py-8 text-center text-muted-foreground text-sm border-t border-border relative z-10 bg-background">
         © {new Date().getFullYear()} {profile.name}.
       </footer>
-
     </main>
   );
 }
