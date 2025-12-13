@@ -55,7 +55,7 @@ model Skill {
   id        String   @id @default(cuid())
   name      String
   type      String   // "HARD" or "SOFT"
-  featured  Boolean  @default(false)
+  featured  Boolean  @default(false) // Featured on homepage
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
