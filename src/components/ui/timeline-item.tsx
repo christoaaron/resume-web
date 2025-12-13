@@ -19,7 +19,7 @@ export function TimelineItem({ item, index }: { item: TimelineItemProps; index: 
                     <h3 className="text-xl font-bold text-foreground">{item.title}</h3>
                     <p className="text-primary font-medium">{item.subtitle}</p>
                 </div>
-                <div className="text-sm text-secondary font-mono whitespace-nowrap text-right">
+                <div className="text-sm text-muted-foreground font-mono whitespace-nowrap text-right">
                     <div>{item.date}</div>
                 </div>
             </div>
@@ -33,7 +33,7 @@ export function TimelineItem({ item, index }: { item: TimelineItemProps; index: 
             )}
 
             {item.location && (
-                <div className="mt-4 pt-4 border-t border-border text-xs text-secondary flex items-center gap-1">
+                <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground flex items-center gap-1">
                     📍 {item.location}
                 </div>
             )}

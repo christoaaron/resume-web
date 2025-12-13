@@ -12,14 +12,14 @@ export default function About({ bio, skills }: { bio: string, skills: any[] }) {
                 transition={{ duration: 0.5 }}
                 className="space-y-8"
             >
-                <span className="text-secondary text-sm font-mono uppercase tracking-widest">About</span>
+                <span className="text-muted-foreground text-sm font-mono uppercase tracking-widest">About</span>
 
                 <div className="text-2xl md:text-3xl leading-relaxed font-light text-foreground whitespace-pre-wrap">
                     {bio}
                 </div>
 
                 {skills && skills.length > 0 && (
-                    <div className="pt-8 flex flex-wrap justify-center gap-8 text-sm text-secondary">
+                    <div className="pt-8 flex flex-wrap justify-center gap-8 text-sm text-muted-foreground">
                         {skills.slice(0, 4).map((skill) => (
                             <div key={skill.id}>{skill.name}</div>
                         ))}

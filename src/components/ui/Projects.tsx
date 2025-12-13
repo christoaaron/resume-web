@@ -43,12 +43,12 @@ export default function Projects() {
                         className="group block p-8 border border-border hover:border-foreground/20 rounded-lg transition-colors bg-muted/30 hover:bg-muted/50"
                     >
                         <div className="flex justify-between items-start mb-12">
-                            <span className="text-xs font-mono text-secondary uppercase tracking-widest">{project.category}</span>
+                            <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">{project.category}</span>
                             <ArrowUpRight className="w-5 h-5 opacity-0 -translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" />
                         </div>
 
                         <h3 className="text-xl font-bold mb-2 group-hover:translate-x-1 transition-transform">{project.title}</h3>
-                        <p className="text-secondary text-sm">{project.description}</p>
+                        <p className="text-muted-foreground text-sm">{project.description}</p>
                     </Link>
                 ))}
             </motion.div>

@@ -17,15 +17,15 @@ export default function Contact({ profile }: { profile: any }) {
                 <div className="grid md:grid-cols-2 gap-12">
                     <div>
                         <h2 className="text-3xl font-bold tracking-tight mb-4">{profile.contactTitle || "Let's work together."}</h2>
-                        <p className="text-secondary mb-8">{profile.contactDescription || "Available for freelance and full-time opportunities."}</p>
-                        <a href={`mailto:${profile.email}`} className="inline-block border-b border-foreground pb-1 hover:text-secondary hover:border-secondary transition-colors">
+                        <p className="text-muted-foreground mb-8">{profile.contactDescription || "Available for freelance and full-time opportunities."}</p>
+                        <a href={`mailto:${profile.email}`} className="inline-block border-b border-foreground pb-1 hover:text-muted-foreground hover:border-muted-foreground transition-colors">
                             {profile.email}
                         </a>
                     </div>
 
                     <div className="space-y-4">
                         <div className="flex flex-col gap-4">
-                            <span className="text-sm font-mono text-secondary uppercase">Socials</span>
+                            <span className="text-sm font-mono text-muted-foreground uppercase">Socials</span>
                             <div className="flex items-center gap-6">
                                 {profile.github && (
                                     <a

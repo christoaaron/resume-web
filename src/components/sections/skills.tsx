@@ -34,8 +34,11 @@ export default function Skills({ skills, certifications }: {
                                     <div className="flex-1">
                                         <span className="font-medium text-foreground block">{cert.name}</span>
                                         <div className="text-xs text-muted-foreground mt-0.5 space-x-2">
+                                            {cert.issuer && (
+                                                <span className="font-semibold text-primary">{cert.issuer}</span>
+                                            )}
                                             {cert.issuedAt && (
-                                                <span>Issued: {new Date(cert.issuedAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
+                                                <span>{cert.issuer && "• "}Issued: {new Date(cert.issuedAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>
                                             )}
                                             {cert.expiresAt && (
                                                 <span>• Expires: {new Date(cert.expiresAt).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}</span>

@@ -22,7 +22,7 @@ export default function Projects({ data }: { data: SafeProject[] }) {
                         </div>
 
                         <h3 className="text-xl font-bold mb-2">{data[0].title}</h3>
-                        <p className="text-sm text-secondary font-medium mb-4">{data[0].subtitle}</p>
+                        <p className="text-sm text-muted-foreground font-medium mb-4">{data[0].subtitle}</p>
 
                         <div className="flex-grow">
                             {data[0].description && (
@@ -33,7 +33,7 @@ export default function Projects({ data }: { data: SafeProject[] }) {
                         </div>
 
                         {data[0].location && (
-                            <div className="mt-4 pt-4 border-t border-border text-xs text-secondary flex items-center gap-1">
+                            <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground flex items-center gap-1">
                                 📍 {data[0].location}
                             </div>
                         )}

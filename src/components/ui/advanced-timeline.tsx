@@ -55,7 +55,7 @@ export function AdvancedTimeline({ items }: { items: TimelineItemProps[] }) {
                                 </span>
 
                                 <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-                                <p className="text-secondary font-medium mb-4 flex items-center gap-2">
+                                <p className="text-muted-foreground font-medium mb-4 flex items-center gap-2">
                                     {item.subtitle}
                                 </p>
 
@@ -68,7 +68,7 @@ export function AdvancedTimeline({ items }: { items: TimelineItemProps[] }) {
                                 )}
 
                                 {item.location && (
-                                    <div className="mt-4 pt-4 border-t border-border text-xs text-secondary flex items-center gap-1">
+                                    <div className="mt-4 pt-4 border-t border-border text-xs text-muted-foreground flex items-center gap-1">
                                         📍 {item.location}
                                     </div>
                                 )}

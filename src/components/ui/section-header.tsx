@@ -11,7 +11,7 @@ export function SectionHeader({ title, description }: { title: string; descripti
             className="mb-12"
         >
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">{title}</h2>
-            {description && <p className="text-secondary max-w-2xl">{description}</p>}
+            {description && <p className="text-muted-foreground max-w-2xl">{description}</p>}
         </motion.div>
     );
 }
