@@ -13,6 +13,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://mausukses.com"),
   title: {
     default: "Christopher Aaron | Tourism, Marketing & Business Administration Professional",
     template: "%s | Christopher Aaron",
@@ -63,6 +64,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Christopher Aaron | Portfolio",
     description: "Tourism, Marketing & Business Administration Graduate.",
+  },
+  verification: {
+    google: "google-site-verification-code", // Replace with your code from Google Search Console
   },
 };
 
