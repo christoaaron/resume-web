@@ -14,7 +14,7 @@ export default function Hero({ name, headline }: { name: string; headline: strin
                 {lastName}
             </h1>
 
-            <p className="text-xl text-secondary max-w-lg mx-auto font-light">
+            <p className="text-xl text-muted-foreground max-w-lg mx-auto font-light">
                 {headline}
             </p>
         </section>

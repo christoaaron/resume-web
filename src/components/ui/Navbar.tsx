@@ -46,7 +46,7 @@ export default function Navbar({ name }: { name: string }) {
                         key={link.name}
                         href={link.href}
                         onClick={(e) => handleScroll(e, link.href)}
-                        className="text-sm font-medium text-secondary hover:text-foreground transition-colors"
+                        className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
                     >
                         {link.name}
                     </Link>
