@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     description: "Tourism, Marketing & Business Administration Graduate.",
   },
   verification: {
-    google: "google-site-verification-code", // Replace with your code from Google Search Console
+    google: "1eLscde5TIzga4iDWCUt4QkiFUC8e__Irg-7l69c-1M",
   },
 };
 
