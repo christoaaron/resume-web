@@ -49,8 +49,8 @@ export default async function AdminExperiencePage() {
                                     <form action={async () => {
                                         "use server";
                                         await deleteExperience(item.id);
-                                    }}>
-                                        <button className="p-2 text-secondary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
+                                    }} className="flex items-center">
+                                        <button className="p-2 text-secondary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors flex items-center">
                                             <Trash2 className="w-4 h-4" />
                                         </button>
                                     </form>

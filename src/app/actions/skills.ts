@@ -1,8 +1,10 @@
+
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
+import { ActionState } from "@/lib/types";
 
 // --- SKILLS ---
 
@@ -11,7 +13,7 @@ const SkillSchema = z.object({
     type: z.enum(["HARD", "SOFT"]),
 });
 
-export async function createSkill(prevState: any, formData: FormData) {
+export async function createSkill(prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             name: formData.get("name"),
@@ -29,6 +31,7 @@ export async function createSkill(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("skills", { expire: 0 } as any);
         return { message: "Skill created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -36,7 +39,7 @@ export async function createSkill(prevState: any, formData: FormData) {
     }
 }
 
-export async function updateSkill(id: string, prevState: any, formData: FormData) {
+export async function updateSkill(id: string, prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             name: formData.get("name"),
@@ -55,6 +58,7 @@ export async function updateSkill(id: string, prevState: any, formData: FormData
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("skills", { expire: 0 } as any);
         return { message: "Skill updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -66,9 +70,29 @@ export async function deleteSkill(id: string) {
     try {
         await prisma.skill.delete({ where: { id } });
         revalidatePath("/", "layout");
+        revalidateTag("skills", { expire: 0 } as any);
         return { message: "Skill deleted successfully", success: true };
     } catch (e) {
         return { message: "Failed to delete skill", success: false };
+    }
+}
+// ... (previous code)
+
+export async function toggleSkillFeatured(id: string) {
+    try {
+        const skill = await prisma.skill.findUnique({ where: { id } });
+        if (!skill) return { message: "Skill not found", success: false };
+
+        await prisma.skill.update({
+            where: { id },
+            data: { featured: !skill.featured },
+        });
+
+        revalidatePath("/", "layout");
+        revalidateTag("skills", { expire: 0 } as any);
+        return { message: "Skill updated successfully", success: true };
+    } catch (e) {
+        return { message: "Failed to update skill", success: false };
     }
 }
 
@@ -79,7 +103,7 @@ const CertificationSchema = z.object({
     link: z.string().optional(),
 });
 
-export async function createCertification(prevState: any, formData: FormData) {
+export async function createCertification(prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             name: formData.get("name"),
@@ -100,6 +124,7 @@ export async function createCertification(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("certifications", { expire: 0 } as any);
         return { message: "Certification created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -107,7 +132,7 @@ export async function createCertification(prevState: any, formData: FormData) {
     }
 }
 
-export async function updateCertification(id: string, prevState: any, formData: FormData) {
+export async function updateCertification(id: string, prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             name: formData.get("name"),
@@ -129,6 +154,7 @@ export async function updateCertification(id: string, prevState: any, formData: 
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("certifications", { expire: 0 } as any);
         return { message: "Certification updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -140,6 +166,7 @@ export async function deleteCertification(id: string) {
     try {
         await prisma.certification.delete({ where: { id } });
         revalidatePath("/", "layout");
+        revalidateTag("certifications", { expire: 0 } as any);
         return { message: "Certification deleted successfully", success: true };
     } catch (e) {
         return { message: "Failed to delete certification", success: false };

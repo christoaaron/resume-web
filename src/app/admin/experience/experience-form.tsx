@@ -4,6 +4,7 @@ import { createExperience, updateExperience } from "@/app/actions/experience";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useFormState } from "react-dom";
+import { ActionState } from "@/lib/types";
 
 type ExperienceFormProps = {
     initialData?: any;
@@ -14,7 +15,8 @@ export function ExperienceForm({ initialData }: ExperienceFormProps) {
         ? updateExperience.bind(null, initialData.id)
         : createExperience;
 
-    const [state, formAction] = useFormState(action as any, { message: "", success: false });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(action, initialState);
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">

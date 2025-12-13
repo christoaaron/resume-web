@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
 
 // No direct import of Profile; using any type for profile prop
 
@@ -15,21 +16,62 @@ export default function Contact({ profile }: { profile: any }) {
             >
                 <div className="grid md:grid-cols-2 gap-12">
                     <div>
-                        <h2 className="text-3xl font-bold tracking-tight mb-4">Let&apos;s work together.</h2>
-                        <p className="text-secondary mb-8">Available for freelance and full-time opportunities.</p>
+                        <h2 className="text-3xl font-bold tracking-tight mb-4">{profile.contactTitle || "Let's work together."}</h2>
+                        <p className="text-secondary mb-8">{profile.contactDescription || "Available for freelance and full-time opportunities."}</p>
                         <a href={`mailto:${profile.email}`} className="inline-block border-b border-foreground pb-1 hover:text-secondary hover:border-secondary transition-colors">
                             {profile.email}
                         </a>
                     </div>
 
                     <div className="space-y-4">
-                        {/* Simple form or links could go here, keeping it text-based for minimalism */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-4">
                             <span className="text-sm font-mono text-secondary uppercase">Socials</span>
-                            {profile.github && <a href={profile.github} target="_blank" className="hover:text-secondary transition-colors">GitHub</a>}
-                            {profile.twitter && <a href={profile.twitter} target="_blank" className="hover:text-secondary transition-colors">Twitter</a>}
-                            {profile.linkedin && <a href={profile.linkedin} target="_blank" className="hover:text-secondary transition-colors">LinkedIn</a>}
-                            {profile.instagram && <a href={profile.instagram} target="_blank" className="hover:text-secondary transition-colors">Instagram</a>}
+                            <div className="flex items-center gap-6">
+                                {profile.github && (
+                                    <a
+                                        href={profile.github}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-foreground transition-colors transform hover:scale-110 duration-200"
+                                        aria-label="GitHub"
+                                    >
+                                        <Github className="w-6 h-6" />
+                                    </a>
+                                )}
+                                {profile.linkedin && (
+                                    <a
+                                        href={profile.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-foreground transition-colors transform hover:scale-110 duration-200"
+                                        aria-label="LinkedIn"
+                                    >
+                                        <Linkedin className="w-6 h-6" />
+                                    </a>
+                                )}
+                                {profile.twitter && (
+                                    <a
+                                        href={profile.twitter}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-foreground transition-colors transform hover:scale-110 duration-200"
+                                        aria-label="Twitter"
+                                    >
+                                        <Twitter className="w-6 h-6" />
+                                    </a>
+                                )}
+                                {profile.instagram && (
+                                    <a
+                                        href={profile.instagram}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-muted-foreground hover:text-foreground transition-colors transform hover:scale-110 duration-200"
+                                        aria-label="Instagram"
+                                    >
+                                        <Instagram className="w-6 h-6" />
+                                    </a>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

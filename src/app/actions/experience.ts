@@ -1,8 +1,9 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
+import { ActionState } from "@/lib/types";
 
 const ExperienceSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -12,7 +13,7 @@ const ExperienceSchema = z.object({
     description: z.string().optional(),
 });
 
-export async function createExperience(prevState: any, formData: FormData) {
+export async function createExperience(prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -40,6 +41,7 @@ export async function createExperience(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("experience", { expire: 0 } as any);
         return { message: "Experience created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -47,7 +49,7 @@ export async function createExperience(prevState: any, formData: FormData) {
     }
 }
 
-export async function updateExperience(id: string, prevState: any, formData: FormData) {
+export async function updateExperience(id: string, prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             title: formData.get("title"),

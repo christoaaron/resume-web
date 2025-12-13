@@ -55,6 +55,7 @@ model Skill {
   id        String   @id @default(cuid())
   name      String
   type      String   // "HARD" or "SOFT"
+  featured  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -73,6 +74,8 @@ model Profile {
   headline    String
   bio         String
   email       String
+  contactTitle String @default("Let's work together.")
+  contactDescription String @default("Available for freelance and full-time opportunities.")
   github      String?
   linkedin    String?
   instagram   String?

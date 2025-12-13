@@ -1,11 +1,12 @@
 "use client";
 
 import { updateProfile } from "@/app/actions/profile";
-// Using any for initialData to avoid Prisma type import issues
 import { useFormState } from "react-dom";
+import { ActionState } from "@/lib/types";
 
 export function ProfileForm({ initialData }: { initialData: any }) {
-    const [state, formAction] = useFormState(updateProfile as any, { message: "" });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(updateProfile, initialState);
 
     return (
         <form action={formAction} className="space-y-6">
@@ -51,6 +52,30 @@ export function ProfileForm({ initialData }: { initialData: any }) {
                     className="w-full bg-muted border border-border rounded px-3 py-2"
                     required
                 />
+            </div>
+
+            <div className="space-y-4 pt-4 border-t border-border">
+                <h3 className="text-lg font-medium">Contact Section</h3>
+                <div className="grid grid-cols-1 gap-4">
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Contact Title</label>
+                        <input
+                            name="contactTitle"
+                            defaultValue={initialData?.contactTitle || ""}
+                            className="w-full bg-muted border border-border rounded px-3 py-2"
+                            placeholder="e.g. Let's work together."
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Contact Description</label>
+                        <input
+                            name="contactDescription"
+                            defaultValue={initialData?.contactDescription || ""}
+                            className="w-full bg-muted border border-border rounded px-3 py-2"
+                            placeholder="e.g. Available for freelance..."
+                        />
+                    </div>
+                </div>
             </div>
 
             <div className="space-y-2">

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function About({ bio }: { bio: string }) {
+export default function About({ bio, skills }: { bio: string, skills: any[] }) {
     return (
         <section id="about" className="py-24 px-6 md:px-12 max-w-4xl mx-auto">
             <motion.div
@@ -18,12 +18,13 @@ export default function About({ bio }: { bio: string }) {
                     {bio}
                 </div>
 
-                <div className="pt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-secondary">
-                    <div>Next.js ecosystem</div>
-                    <div>TypeScript</div>
-                    <div>System Design</div>
-                    <div>Performance</div>
-                </div>
+                {skills && skills.length > 0 && (
+                    <div className="pt-8 flex flex-wrap justify-center gap-8 text-sm text-secondary">
+                        {skills.slice(0, 4).map((skill) => (
+                            <div key={skill.id}>{skill.name}</div>
+                        ))}
+                    </div>
+                )}
             </motion.div>
         </section>
     );

@@ -1,8 +1,9 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
+import { ActionState } from "@/lib/types";
 
 const ProjectSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -13,7 +14,7 @@ const ProjectSchema = z.object({
     link: z.string().optional(),
 });
 
-export async function createProject(prevState: any, formData: FormData) {
+export async function createProject(prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -43,6 +44,7 @@ export async function createProject(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("projects", { expire: 0 } as any);
         return { message: "Project created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -50,7 +52,7 @@ export async function createProject(prevState: any, formData: FormData) {
     }
 }
 
-export async function updateProject(id: string, prevState: any, formData: FormData) {
+export async function updateProject(id: string, prevState: ActionState, formData: FormData): Promise<ActionState> {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -81,6 +83,7 @@ export async function updateProject(id: string, prevState: any, formData: FormDa
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("projects", { expire: 0 } as any);
         return { message: "Project updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -92,6 +95,7 @@ export async function deleteProject(id: string) {
     try {
         await prisma.project.delete({ where: { id } });
         revalidatePath("/", "layout");
+        revalidateTag("projects", { expire: 0 } as any);
         return { message: "Project deleted successfully", success: true };
     } catch (e) {
         return { message: "Failed to delete project", success: false };

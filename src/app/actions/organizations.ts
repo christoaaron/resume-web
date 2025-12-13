@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 
 const OrganizationSchema = z.object({
@@ -36,6 +36,7 @@ export async function createOrganization(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("organizations", { expire: 0 } as any);
         return { message: "Organization created successfully", success: true };
     } catch (e) {
         console.error(e);

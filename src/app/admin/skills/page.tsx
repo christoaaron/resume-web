@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { getSkills, getCertifications } from "@/lib/data";
-import { Plus, Pencil, Trash2, ArrowLeft, Award, Brain } from "lucide-react";
-import { deleteSkill, deleteCertification } from "@/app/actions/skills";
+import { Plus, Pencil, Trash2, ArrowLeft, Award, Brain, Star } from "lucide-react";
+import { deleteSkill, deleteCertification, toggleSkillFeatured } from "@/app/actions/skills";
+import FeaturedToggle from "./featured-toggle";
 
 export const revalidate = 0;
 
@@ -40,10 +41,11 @@ export default async function AdminSkillsPage() {
                             {hard.map(skill => (
                                 <div key={skill.id} className="group flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-sm">
                                     <span>{skill.name}</span>
-                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-border pl-2 ml-1">
-                                        <Link href={`/admin/skills/skill/${skill.id}`}><Pencil className="w-3 h-3 hover:text-primary" /></Link>
-                                        <form action={async () => { "use server"; await deleteSkill(skill.id); }}>
-                                            <button><Trash2 className="w-3 h-3 hover:text-red-500" /></button>
+                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-border pl-2 ml-1">
+                                        <FeaturedToggle id={skill.id} initialFeatured={skill.featured} />
+                                        <Link href={`/admin/skills/skill/${skill.id}`} className="flex items-center"><Pencil className="w-3 h-3 hover:text-primary" /></Link>
+                                        <form action={async () => { "use server"; await deleteSkill(skill.id); }} className="flex items-center">
+                                            <button className="flex items-center"><Trash2 className="w-3 h-3 hover:text-red-500" /></button>
                                         </form>
                                     </div>
                                 </div>
@@ -72,10 +74,10 @@ export default async function AdminSkillsPage() {
                             {soft.map(skill => (
                                 <div key={skill.id} className="group flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-sm">
                                     <span>{skill.name}</span>
-                                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-border pl-2 ml-1">
-                                        <Link href={`/admin/skills/skill/${skill.id}`}><Pencil className="w-3 h-3 hover:text-primary" /></Link>
-                                        <form action={async () => { "use server"; await deleteSkill(skill.id); }}>
-                                            <button><Trash2 className="w-3 h-3 hover:text-red-500" /></button>
+                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-border pl-2 ml-1">
+                                        <Link href={`/admin/skills/skill/${skill.id}`} className="flex items-center"><Pencil className="w-3 h-3 hover:text-primary" /></Link>
+                                        <form action={async () => { "use server"; await deleteSkill(skill.id); }} className="flex items-center">
+                                            <button className="flex items-center"><Trash2 className="w-3 h-3 hover:text-red-500" /></button>
                                         </form>
                                     </div>
                                 </div>

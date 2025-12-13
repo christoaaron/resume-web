@@ -5,6 +5,7 @@ import { Project } from "@prisma/client";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { ArrowLeft } from "lucide-react";
+import { ActionState } from "@/lib/types";
 
 // Omit date objects to be safe with server/client boundary if passed directly, 
 // though initialData usually comes from server component so it might have Dates.
@@ -19,7 +20,8 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
         ? updateProject.bind(null, initialData.id)
         : createProject;
 
-    const [state, formAction] = useFormState(action as any, { message: "", success: false });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(action, initialState);
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">

@@ -61,12 +61,14 @@ export const getCertifications = unstable_cache(
 
 export const getProfile = unstable_cache(
     async () => {
-        // Return a static default profile; DB call omitted to avoid missing model errors
-        return {
+        const profile = await prisma.profile.findFirst();
+        return profile || {
             id: "",
             name: "Christopher Aaron",
             headline: "Crafting digital experiences with precision and clarity.",
             bio: "I am a specialized developer focused on clarity and performance.",
+            contactTitle: "Let's work together.",
+            contactDescription: "Available for freelance and full-time opportunities.",
             email: "hello@example.com",
             github: "",
             linkedin: "",
@@ -74,8 +76,8 @@ export const getProfile = unstable_cache(
             twitter: "",
             createdAt: new Date(),
             updatedAt: new Date(),
-        } as any;
+        };
     },
     ["profile"],
-    { tags: ["profile"], revalidate: 3600 }
+    { tags: ["profile"], revalidate: 60 } // Reduce cache to 60s
 );

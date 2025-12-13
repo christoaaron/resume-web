@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 
 const EducationSchema = z.object({
@@ -36,6 +36,7 @@ export async function createEducation(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("education", { expire: 0 } as any);
         return { message: "Education created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -69,6 +70,7 @@ export async function updateEducation(id: string, prevState: any, formData: Form
         });
 
         revalidatePath("/", "layout");
+        revalidateTag("education", { expire: 0 } as any);
         return { message: "Education updated successfully", success: true };
     } catch (e) {
         console.error(e);

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useLenis } from "lenis/react";
 
 const links = [
     { name: "Home", href: "/" },
@@ -12,12 +13,21 @@ const links = [
 ];
 
 export default function Navbar({ name }: { name: string }) {
+    const lenis = useLenis();
+
     const initials = name
         .split(" ")
         .map((n) => n[0])
         .join("")
         .toUpperCase()
         .slice(0, 2) + ".";
+
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
+        if (href.startsWith("#")) {
+            e.preventDefault();
+            lenis?.scrollTo(href);
+        }
+    };
 
     return (
         <motion.nav
@@ -35,6 +45,7 @@ export default function Navbar({ name }: { name: string }) {
                     <Link
                         key={link.name}
                         href={link.href}
+                        onClick={(e) => handleScroll(e, link.href)}
                         className="text-sm font-medium text-secondary hover:text-foreground transition-colors"
                     >
                         {link.name}
