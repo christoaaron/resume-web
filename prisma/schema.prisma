@@ -60,9 +60,9 @@ model Skill {
   updatedAt DateTime @updatedAt
 }
 
-model Certification {
   id        String   @id @default(cuid())
   name      String
+  issuer    String?
   link      String?
   issuedAt  DateTime?
   expiresAt DateTime?

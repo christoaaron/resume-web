@@ -39,7 +39,16 @@ export function CertificationForm({ initialData }: CertificationFormProps) {
                         defaultValue={initialData?.name || ""}
                         className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
                         placeholder="e.g. AWS Solutions Architect"
-                        required
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <label className="text-sm font-medium">Issuer</label>
+                    <input
+                        name="issuer"
+                        defaultValue={initialData?.issuer || ""}
+                        className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
+                        placeholder="e.g. AWS"
                     />
                 </div>
 

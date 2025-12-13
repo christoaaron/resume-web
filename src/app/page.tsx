@@ -66,7 +66,7 @@ export default async function Home() {
   // For profile, we need to be careful as it's a single object
   const { createdAt, updatedAt, ...cleanProfile } = profile;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mausukses.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://christopheraaron.vercel.app';
 
   const jsonLd = {
     '@context': 'https://schema.org',

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mausukses.com' // Ensure this matches your actual domain
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://christopheraaron.vercel.app' // Ensure this matches your actual domain
 
     return [
         {
