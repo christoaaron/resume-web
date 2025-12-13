@@ -1,7 +1,7 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://your-domain.com'; // TODO: Update with actual domain
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mausukses.com' // Ensure this matches your actual domain
 
     return [
         {
@@ -25,8 +25,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
         {
             url: `${baseUrl}/#contact`,
             lastModified: new Date(),
-            changeFrequency: 'yearly',
-            priority: 0.5,
+            changeFrequency: 'monthly',
+            priority: 0.8,
         },
-    ];
+    ]
 }

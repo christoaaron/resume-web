@@ -66,8 +66,29 @@ export default async function Home() {
   // For profile, we need to be careful as it's a single object
   const { createdAt, updatedAt, ...cleanProfile } = profile;
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://mausukses.com';
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    jobTitle: profile.headline,
+    url: baseUrl,
+    sameAs: [
+      profile.linkedin,
+      profile.github,
+      profile.twitter,
+      profile.instagram
+    ].filter(Boolean),
+    description: profile.bio
+  }
+
   return (
     <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar name={cleanProfile.name} />
       <Hero name={cleanProfile.name} headline={cleanProfile.headline} />
       <About bio={cleanProfile.bio} skills={featuredHardSkills} />
