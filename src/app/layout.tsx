@@ -15,8 +15,19 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://christopheraaron.vercel.app"),
   title: {
-    default: "Christopher Aaron | Tourism, Marketing & Business Administration Professional",
-    template: "%s | Christopher Aaron",
+    default: "Christopher Aaron | Official Portfolio - Tourism, Marketing & Business",
+    template: "%s | Christopher Aaron (Official)",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   alternates: {
     canonical: "/",
