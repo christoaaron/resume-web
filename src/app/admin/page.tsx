@@ -81,7 +81,7 @@ export default async function AdminDashboard() {
                         </div>
                         <h1 className="text-4xl font-bold tracking-tight">Dashboard</h1>
                     </div>
-                    <p className="text-lg text-secondary max-w-2xl">
+                    <p className="text-lg text-muted-foreground max-w-2xl">
                         Welcome back. Select a section below to manage your portfolio content and keep your digital presence up to date.
                     </p>
                 </header>
@@ -93,7 +93,7 @@ export default async function AdminDashboard() {
                             <Activity className="w-6 h-6" />
                         </div>
                         <div>
-                            <p className="text-secondary text-sm font-medium">Unique Visitors (Estimate)</p>
+                            <p className="text-muted-foreground text-sm font-medium">Unique Visitors (Estimate)</p>
                             <h3 className="text-3xl font-bold">{stats.unique}</h3>
                         </div>
                     </div>
@@ -115,7 +115,7 @@ export default async function AdminDashboard() {
                                     <h2 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
                                         {section.title}
                                     </h2>
-                                    <p className="text-secondary text-sm mb-6 line-clamp-2">
+                                    <p className="text-muted-foreground text-sm mb-6 line-clamp-2">
                                         {section.description}
                                     </p>
 
