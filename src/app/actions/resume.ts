@@ -2,8 +2,8 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { z } from "zod";
+import { ActionState } from "@/lib/types";
 
 const ProjectSchema = z.object({
     title: z.string().min(1),
@@ -13,7 +13,7 @@ const ProjectSchema = z.object({
     description: z.string().optional(), // Textarea (newline separated)
 });
 
-export async function createProject(prevState: any, formData: FormData) {
+export async function createProject(prevState: ActionState, formData: FormData) {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -44,7 +44,7 @@ export async function createProject(prevState: any, formData: FormData) {
 
         revalidatePath("/", "layout");
         return { message: "Project created" };
-    } catch (e) {
+    } catch {
         return { message: "Failed to create project" };
     }
 }
@@ -54,7 +54,7 @@ export async function deleteProject(id: string) {
         await prisma.project.delete({ where: { id } });
         revalidatePath("/", "layout");
         return { message: "Deleted" };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete" };
     }
 }
@@ -67,7 +67,7 @@ const ExperienceSchema = z.object({
     description: z.string().optional(),
 });
 
-export async function createExperience(prevState: any, formData: FormData) {
+export async function createExperience(prevState: ActionState, formData: FormData) {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -96,7 +96,7 @@ export async function createExperience(prevState: any, formData: FormData) {
 
         revalidatePath("/", "layout");
         return { message: "Experience created" };
-    } catch (e) {
+    } catch {
         return { message: "Failed to create experience" };
     }
 }
@@ -106,7 +106,7 @@ export async function deleteExperience(id: string) {
         await prisma.experience.delete({ where: { id } });
         revalidatePath("/", "layout");
         return { message: "Deleted" };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete" };
     }
 }

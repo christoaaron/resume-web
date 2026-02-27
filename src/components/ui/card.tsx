@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 interface CardProps {
     className?: string;
@@ -9,7 +8,7 @@ interface CardProps {
     delay?: number;
 }
 
-export function Card({ className, children, delay = 0 }: CardProps) {
+export function Card({ className, children }: CardProps) {
     return (
         <div
             className={cn(

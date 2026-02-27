@@ -100,7 +100,7 @@ export default async function AdminDashboard() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {adminSections.map((section, index) => (
+                    {adminSections.map((section) => (
                         <Link key={section.title} href={section.href} className="group block h-full">
                             <div className="h-full bg-card border border-border rounded-2xl p-6 hover:border-primary/50 hover:shadow-lg transition-all duration-300 relative overflow-hidden">
                                 <div className={`absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity ${section.color}`}>

@@ -16,7 +16,6 @@ export async function trackVisit() {
         // Simple duplicate check: prevent creating same visit within last 1 hour? 
         // Or just log everything? Let's log unique visits per 24h for "Unique" stat.
 
-        // @ts-ignore: Visitor model exists after generation
         await prisma.visitor.create({
             data: {
                 ipHash,
@@ -33,13 +32,11 @@ export async function trackVisit() {
 
 export async function getVisitorStats() {
     try {
-        // @ts-ignore: Visitor model exists after generation
         const totalVisits = await prisma.visitor.count();
 
         // For unique visitors, we can group by ipHash. 
         // Prisma doesn't support distinct count directly in easy API for all DBs, 
         // but for now let's just count unique hashes distinct.
-        // @ts-ignore: Visitor model exists after generation
         const uniqueVisitors = await prisma.visitor.groupBy({
             by: ['ipHash'],
         });
@@ -48,7 +45,7 @@ export async function getVisitorStats() {
             total: totalVisits,
             unique: uniqueVisitors.length
         };
-    } catch (e) {
+    } catch {
         return { total: 0, unique: 0 };
     }
 }

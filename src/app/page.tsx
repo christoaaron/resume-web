@@ -1,4 +1,5 @@
 import Navbar from "@/components/ui/Navbar";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Hero from "@/components/ui/Hero";
 import About from "@/components/ui/About";
 import Experience from "@/components/sections/experience";
@@ -8,7 +9,6 @@ import Projects from "@/components/sections/projects";
 import Skills from "@/components/sections/skills";
 import Contact from "@/components/ui/Contact";
 import { getCertifications, getEducation, getExperience, getOrganizations, getProjects, getSkills, getProfile } from "@/lib/data";
-import { AnimatedBackground } from "@/components/ui/animated-background";
 
 // Revalidate all data every 60 seconds (ISR)
 export const revalidate = 60;
@@ -49,23 +49,52 @@ export default async function Home() {
   };
 
   // Serialize data to avoid passing Date objects to Client Components
-  const cleanExperience = experienceData.map(({ createdAt, updatedAt, ...item }) => item);
-  const cleanEducation = educationData.map(({ createdAt, updatedAt, ...item }) => item);
-  const cleanOrganizations = organizationsData.map(({ createdAt, updatedAt, ...item }) => item);
-  const cleanProjects = projectsData.map(({ createdAt, updatedAt, ...item }) => item);
+  const cleanExperience = experienceData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
+  const cleanEducation = educationData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
+  const cleanOrganizations = organizationsData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
+  const cleanProjects = projectsData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
 
-  const allHardSkills = skillsData.hard.map(({ createdAt, updatedAt, ...item }) => item);
-  const featuredHardSkills = allHardSkills.filter(s => s.featured);
+  const allHardSkills = skillsData.hard.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
+  const featuredHardSkills = allHardSkills.filter((s: any) => s.featured);
 
   const cleanSkills = {
     hard: allHardSkills,
-    soft: skillsData.soft.map(({ createdAt, updatedAt, ...item }) => item),
+    soft: skillsData.soft.map(({ ...item }) => {
+      delete (item as any).createdAt;
+      delete (item as any).updatedAt;
+      return item;
+    }),
   };
-  const cleanCertifications = certificationsData.map(({ createdAt, updatedAt, ...item }) => item);
+  const cleanCertifications = certificationsData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
 
   // For profile, we need to be careful as it's a single object
-  const { createdAt, updatedAt, ...cleanProfile } = profile;
-
+  const cleanProfile = { ...profile };
+  delete (cleanProfile as any).createdAt;
+  delete (cleanProfile as any).updatedAt;
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://christopheraaron.vercel.app';
 
   const jsonLd = {

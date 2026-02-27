@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { createOrganization, updateOrganization } from "@/app/actions/organizations";
@@ -5,8 +6,10 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 
+import { ActionState } from "@/lib/types";
+
 type OrganizationFormProps = {
-    initialData?: any;
+    initialData?: { [key: string]: any };
 };
 
 export function OrganizationForm({ initialData }: OrganizationFormProps) {
@@ -14,7 +17,8 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
         ? updateOrganization.bind(null, initialData.id)
         : createOrganization;
 
-    const [state, formAction] = useFormState(action as any, { message: "", success: false });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(action, initialState);
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">

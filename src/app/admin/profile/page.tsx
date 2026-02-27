@@ -1,4 +1,3 @@
-import { updateProfile } from "@/app/actions/profile";
 import { getProfile } from "@/lib/data";
 import { ProfileForm } from "./profile-form";
 

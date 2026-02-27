@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { createProject, updateProject } from "@/app/actions/projects";
-import { Project } from "@prisma/client";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { ArrowLeft } from "lucide-react";
@@ -12,7 +12,7 @@ import { ActionState } from "@/lib/types";
 // We'll trust the parent to serialize or Prisma to handle it if it's direct.
 // Actually, usually we should serialize.
 type ProjectFormProps = {
-    initialData?: any; // Using any to avoid strict Date serialization issues
+    initialData?: { [key: string]: any };
 };
 
 export function ProjectForm({ initialData }: ProjectFormProps) {

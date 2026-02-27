@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function About({ bio, skills }: { bio: string, skills: any[] }) {
+export default function About({ bio, skills }: { bio: string, skills: { id: string, name: string }[] }) {
     return (
         <section id="about" className="py-24 px-6 md:px-12 max-w-4xl mx-auto">
             <motion.div

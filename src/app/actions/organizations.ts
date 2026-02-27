@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 
+import { ActionState } from "@/lib/types";
+
 const OrganizationSchema = z.object({
     title: z.string().min(1, "Role/Title is required"),
     subtitle: z.string().min(1, "Organization is required"),
@@ -11,7 +13,7 @@ const OrganizationSchema = z.object({
     date: z.string().min(1, "Date is required"),
 });
 
-export async function createOrganization(prevState: any, formData: FormData) {
+export async function createOrganization(prevState: ActionState, formData: FormData) {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -36,7 +38,7 @@ export async function createOrganization(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("organizations", { expire: 0 } as any);
+        revalidateTag("organizations", { expire: 0 });
         return { message: "Organization created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -44,7 +46,7 @@ export async function createOrganization(prevState: any, formData: FormData) {
     }
 }
 
-export async function updateOrganization(id: string, prevState: any, formData: FormData) {
+export async function updateOrganization(id: string, prevState: ActionState, formData: FormData) {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -82,7 +84,7 @@ export async function deleteOrganization(id: string) {
         await prisma.organization.delete({ where: { id } });
         revalidatePath("/", "layout");
         return { message: "Organization deleted successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete organization", success: false };
     }
 }

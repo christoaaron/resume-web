@@ -1,11 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Twitter, Instagram, Mail } from "lucide-react";
+import { Github, Linkedin, Twitter, Instagram } from "lucide-react";
 
 // No direct import of Profile; using any type for profile prop
 
-export default function Contact({ profile }: { profile: any }) {
+type ProfileData = {
+    contactTitle?: string | null;
+    contactDescription?: string | null;
+    email: string;
+    github?: string | null;
+    linkedin?: string | null;
+    twitter?: string | null;
+    instagram?: string | null;
+};
+
+export default function Contact({ profile }: { profile: ProfileData }) {
     return (
         <section id="contact" className="py-24 px-6 md:px-12 max-w-4xl mx-auto mb-20">
             <motion.div

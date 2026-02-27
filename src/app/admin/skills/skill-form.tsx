@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { createSkill, updateSkill } from "@/app/actions/skills";
@@ -6,8 +7,10 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useSearchParams } from "next/navigation";
 
+import { ActionState } from "@/lib/types";
+
 type SkillFormProps = {
-    initialData?: any;
+    initialData?: { [key: string]: any };
 };
 
 export function SkillForm({ initialData }: SkillFormProps) {
@@ -19,7 +22,8 @@ export function SkillForm({ initialData }: SkillFormProps) {
         ? updateSkill.bind(null, initialData.id)
         : createSkill;
 
-    const [state, formAction] = useFormState(action as any, { message: "", success: false });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(action, initialState);
 
     return (
         <div className="max-w-md mx-auto p-6 md:p-12">

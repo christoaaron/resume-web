@@ -41,7 +41,7 @@ export async function createExperience(prevState: ActionState, formData: FormDat
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("experience", { expire: 0 } as any);
+        revalidateTag("experience", { expire: 0 });
         return { message: "Experience created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -90,7 +90,7 @@ export async function deleteExperience(id: string) {
         await prisma.experience.delete({ where: { id } });
         revalidatePath("/", "layout");
         return { message: "Experience deleted successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete experience", success: false };
     }
 }

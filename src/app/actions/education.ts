@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 
+import { ActionState } from "@/lib/types";
+
 const EducationSchema = z.object({
     title: z.string().min(1, "Degree/Title is required"),
     subtitle: z.string().min(1, "School/Subtitle is required"),
@@ -11,7 +13,7 @@ const EducationSchema = z.object({
     date: z.string().min(1, "Date is required"),
 });
 
-export async function createEducation(prevState: any, formData: FormData) {
+export async function createEducation(prevState: ActionState, formData: FormData) {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -36,7 +38,7 @@ export async function createEducation(prevState: any, formData: FormData) {
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("education", { expire: 0 } as any);
+        revalidateTag("education", { expire: 0 });
         return { message: "Education created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -44,7 +46,7 @@ export async function createEducation(prevState: any, formData: FormData) {
     }
 }
 
-export async function updateEducation(id: string, prevState: any, formData: FormData) {
+export async function updateEducation(id: string, prevState: ActionState, formData: FormData) {
     try {
         const rawData = {
             title: formData.get("title"),
@@ -70,7 +72,7 @@ export async function updateEducation(id: string, prevState: any, formData: Form
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("education", { expire: 0 } as any);
+        revalidateTag("education", { expire: 0 });
         return { message: "Education updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -83,7 +85,7 @@ export async function deleteEducation(id: string) {
         await prisma.education.delete({ where: { id } });
         revalidatePath("/", "layout");
         return { message: "Education deleted successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete education", success: false };
     }
 }

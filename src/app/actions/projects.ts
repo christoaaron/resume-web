@@ -44,7 +44,7 @@ export async function createProject(prevState: ActionState, formData: FormData):
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("projects", { expire: 0 } as any);
+        revalidateTag("projects", { expire: 0 });
         return { message: "Project created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -83,7 +83,7 @@ export async function updateProject(id: string, prevState: ActionState, formData
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("projects", { expire: 0 } as any);
+        revalidateTag("projects", { expire: 0 });
         return { message: "Project updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -95,9 +95,9 @@ export async function deleteProject(id: string) {
     try {
         await prisma.project.delete({ where: { id } });
         revalidatePath("/", "layout");
-        revalidateTag("projects", { expire: 0 } as any);
+        revalidateTag("projects", { expire: 0 });
         return { message: "Project deleted successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete project", success: false };
     }
 }

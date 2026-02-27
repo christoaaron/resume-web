@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { createExperience, updateExperience } from "@/app/actions/experience";
@@ -7,7 +8,7 @@ import { useFormState } from "react-dom";
 import { ActionState } from "@/lib/types";
 
 type ExperienceFormProps = {
-    initialData?: any;
+    initialData?: { [key: string]: any };
 };
 
 export function ExperienceForm({ initialData }: ExperienceFormProps) {

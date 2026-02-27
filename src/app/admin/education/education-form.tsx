@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { createEducation, updateEducation } from "@/app/actions/education";
@@ -5,8 +6,10 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 
+import { ActionState } from "@/lib/types";
+
 type EducationFormProps = {
-    initialData?: any;
+    initialData?: { [key: string]: any };
 };
 
 export function EducationForm({ initialData }: EducationFormProps) {
@@ -14,7 +17,8 @@ export function EducationForm({ initialData }: EducationFormProps) {
         ? updateEducation.bind(null, initialData.id)
         : createEducation;
 
-    const [state, formAction] = useFormState(action as any, { message: "", success: false });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(action, initialState);
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">

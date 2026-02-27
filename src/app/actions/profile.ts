@@ -55,7 +55,7 @@ export async function updateProfile(prevState: ActionState, formData: FormData):
         }
 
         revalidatePath("/", "layout");
-        revalidateTag("profile", { expire: 0 } as any);
+        revalidateTag("profile", { expire: 0 });
         return { message: "Profile updated successfully" };
     } catch (e) {
         console.error(e);

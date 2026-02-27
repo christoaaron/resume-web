@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
 import { getSkills, getCertifications } from "@/lib/data";
-import { Plus, Pencil, Trash2, ArrowLeft, Award, Brain, Star } from "lucide-react";
-import { deleteSkill, deleteCertification, toggleSkillFeatured } from "@/app/actions/skills";
+import { Plus, Pencil, Trash2, ArrowLeft, Award, Brain } from "lucide-react";
+import { deleteSkill, deleteCertification } from "@/app/actions/skills";
 import FeaturedToggle from "./featured-toggle";
 
 export const revalidate = 0;
@@ -38,7 +39,7 @@ export default async function AdminSkillsPage() {
                 <div className="bg-card border border-border rounded-xl p-4">
                     {hard.length === 0 ? <p className="text-secondary text-sm">No hard skills added.</p> : (
                         <div className="flex flex-wrap gap-2">
-                            {hard.map(skill => (
+                            {hard.map((skill: any) => (
                                 <div key={skill.id} className="group flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-sm">
                                     <span>{skill.name}</span>
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-border pl-2 ml-1">
@@ -71,7 +72,7 @@ export default async function AdminSkillsPage() {
                 <div className="bg-card border border-border rounded-xl p-4">
                     {soft.length === 0 ? <p className="text-secondary text-sm">No soft skills added.</p> : (
                         <div className="flex flex-wrap gap-2">
-                            {soft.map(skill => (
+                            {soft.map((skill: any) => (
                                 <div key={skill.id} className="group flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-sm">
                                     <span>{skill.name}</span>
                                     <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity border-l border-border pl-2 ml-1">
@@ -104,7 +105,7 @@ export default async function AdminSkillsPage() {
                     {certifications.length === 0 ? (
                         <div className="p-4 text-secondary text-sm">No certifications added.</div>
                     ) : (
-                        certifications.map(cert => (
+                        certifications.map((cert: any) => (
                             <div key={cert.id} className="p-4 flex items-center justify-between group">
                                 <span className="font-medium">{cert.name}</span>
                                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">

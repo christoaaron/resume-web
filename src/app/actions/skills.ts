@@ -31,7 +31,7 @@ export async function createSkill(prevState: ActionState, formData: FormData): P
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("skills", { expire: 0 } as any);
+        revalidateTag("skills", { expire: 0 });
         return { message: "Skill created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -58,7 +58,7 @@ export async function updateSkill(id: string, prevState: ActionState, formData: 
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("skills", { expire: 0 } as any);
+        revalidateTag("skills", { expire: 0 });
         return { message: "Skill updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -70,9 +70,9 @@ export async function deleteSkill(id: string) {
     try {
         await prisma.skill.delete({ where: { id } });
         revalidatePath("/", "layout");
-        revalidateTag("skills", { expire: 0 } as any);
+        revalidateTag("skills", { expire: 0 });
         return { message: "Skill deleted successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete skill", success: false };
     }
 }
@@ -89,9 +89,9 @@ export async function toggleSkillFeatured(id: string) {
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("skills", { expire: 0 } as any);
+        revalidateTag("skills", { expire: 0 });
         return { message: "Skill updated successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to update skill", success: false };
     }
 }
@@ -133,7 +133,7 @@ export async function createCertification(prevState: ActionState, formData: Form
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("certifications", { expire: 0 } as any);
+        revalidateTag("certifications", { expire: 0 });
         return { message: "Certification created successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -169,7 +169,7 @@ export async function updateCertification(id: string, prevState: ActionState, fo
         });
 
         revalidatePath("/", "layout");
-        revalidateTag("certifications", { expire: 0 } as any);
+        revalidateTag("certifications", { expire: 0 });
         return { message: "Certification updated successfully", success: true };
     } catch (e) {
         console.error(e);
@@ -181,9 +181,9 @@ export async function deleteCertification(id: string) {
     try {
         await prisma.certification.delete({ where: { id } });
         revalidatePath("/", "layout");
-        revalidateTag("certifications", { expire: 0 } as any);
+        revalidateTag("certifications", { expire: 0 });
         return { message: "Certification deleted successfully", success: true };
-    } catch (e) {
+    } catch {
         return { message: "Failed to delete certification", success: false };
     }
 }

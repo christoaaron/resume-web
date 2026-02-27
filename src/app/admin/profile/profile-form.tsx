@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { updateProfile } from "@/app/actions/profile";
 import { useFormState } from "react-dom";
 import { ActionState } from "@/lib/types";
 
-export function ProfileForm({ initialData }: { initialData: any }) {
+export function ProfileForm({ initialData }: { initialData?: { [key: string]: any } }) {
     const initialState: ActionState = { message: "", success: false };
     const [state, formAction] = useFormState(updateProfile, initialState);
 

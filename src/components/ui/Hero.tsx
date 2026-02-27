@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 
 export default function Hero({ name, headline }: { name: string; headline: string }) {
     const firstName = name.split(" ")[0] || "Christopher";

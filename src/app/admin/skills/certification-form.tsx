@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { createCertification, updateCertification } from "@/app/actions/skills";
@@ -5,8 +6,10 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 
+import { ActionState } from "@/lib/types";
+
 type CertificationFormProps = {
-    initialData?: any;
+    initialData?: { [key: string]: any };
 };
 
 export function CertificationForm({ initialData }: CertificationFormProps) {
@@ -14,7 +17,8 @@ export function CertificationForm({ initialData }: CertificationFormProps) {
         ? updateCertification.bind(null, initialData.id)
         : createCertification;
 
-    const [state, formAction] = useFormState(action as any, { message: "", success: false });
+    const initialState: ActionState = { message: "", success: false };
+    const [state, formAction] = useFormState(action, initialState);
 
     return (
         <div className="max-w-md mx-auto p-6 md:p-12">
