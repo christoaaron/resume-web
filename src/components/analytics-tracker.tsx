@@ -1,12 +1,13 @@
+"use client";
+
+import { useEffect } from "react";
 import { trackVisit } from "@/app/actions/analytics";
 
-export async function AnalyticsTracker() {
-    // This is a Server Component. It runs on the server.
-    // We invoke the server action directly.
-    // Fire and forget - don't await strictly to block UI? 
-    // Actually in RSC we should probably just call it.
-
-    await trackVisit();
+export function AnalyticsTracker() {
+    useEffect(() => {
+        // Fire and forget, invoke server action securely from client on mount
+        trackVisit().catch((err) => console.error("Tracking error:", err));
+    }, []);
 
     return null; // Renders nothing
 }
