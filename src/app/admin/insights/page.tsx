@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from "next/link";
-import { getEducation } from "@/lib/data";
-import { Plus, Pencil, Trash2, ArrowLeft } from "lucide-react";
-import { deleteEducation } from "@/app/actions/education";
+import { getInsights } from "@/lib/data";
+import { Plus, Pencil, Trash2, ArrowLeft, Globe, Lock } from "lucide-react";
+import { deleteInsight } from "@/app/actions/insights";
 
 export const revalidate = 0;
 
-export default async function AdminEducationPage() {
-    const education = await getEducation();
+export default async function AdminInsightsPage() {
+    // Pass false to get all insights including drafts in admin view
+    const insights = await getInsights(false);
 
     return (
         <div className="min-h-screen bg-background text-foreground p-8 md:p-12 max-w-7xl mx-auto">
@@ -15,40 +17,48 @@ export default async function AdminEducationPage() {
                     <Link href="/admin" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-4 transition-colors">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
                     </Link>
-                    <h1 className="text-3xl font-bold tracking-tight">Education</h1>
-                    <p className="text-muted-foreground mt-1">Manage your academic background.</p>
+                    <h1 className="text-3xl font-bold tracking-tight">Insights (Blog)</h1>
+                    <p className="text-muted-foreground mt-1">Manage your blog articles and thoughts.</p>
                 </div>
                 <Link
-                    href="/admin/education/new"
+                    href="/admin/insights/new"
                     className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
                 >
-                    <Plus className="w-4 h-4" /> Add Education
+                    <Plus className="w-4 h-4" /> New Insight
                 </Link>
             </header>
 
             <div className="grid gap-4">
-                {education.length === 0 ? (
+                {insights.length === 0 ? (
                     <div className="text-center py-12 border border-dashed border-border rounded-xl bg-muted/50">
-                        <p className="text-muted-foreground">No education added yet.</p>
+                        <p className="text-muted-foreground">No insights found. Write your first article!</p>
                     </div>
                 ) : (
                     <div className="bg-card border border-border rounded-xl divide-y divide-border">
-                        {education.map((item) => (
+                        {insights.map((item: any) => (
                             <div key={item.id} className="p-4 flex items-center justify-between group">
-                                <div>
-                                    <h3 className="font-semibold text-lg">{item.title}</h3>
-                                    <p className="text-sm text-muted-foreground">{item.subtitle} • {item.date}</p>
+                                <div className="flex items-center gap-4">
+                                    <div className={`p-2 rounded-lg ${item.published ? 'bg-green-500/10 text-green-500' : 'bg-orange-500/10 text-orange-500'}`}>
+                                        {item.published ? <Globe className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
+                                    </div>
+                                    <div>
+                                        <h3 className="font-semibold text-lg flex items-center gap-2">
+                                            {item.title}
+                                            {!item.published && <span className="text-xs bg-orange-500/10 text-orange-500 px-2 py-0.5 rounded-full border border-orange-500/20">Draft</span>}
+                                        </h3>
+                                        <p className="text-sm text-muted-foreground">/{item.slug}</p>
+                                    </div>
                                 </div>
                                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Link
-                                        href={`/admin/education/${item.id}`}
+                                        href={`/admin/insights/${item.id}`}
                                         className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
                                     >
                                         <Pencil className="w-4 h-4" />
                                     </Link>
                                     <form action={async () => {
                                         "use server";
-                                        await deleteEducation(item.id);
+                                        await deleteInsight(item.id);
                                     }}>
                                         <button className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                                             <Trash2 className="w-4 h-4" />

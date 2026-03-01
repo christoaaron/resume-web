@@ -27,7 +27,7 @@ export function SkillForm({ initialData }: SkillFormProps) {
 
     return (
         <div className="max-w-md mx-auto p-6 md:p-12">
-            <Link href="/admin/skills" className="flex items-center text-sm text-secondary hover:text-primary mb-8 transition-colors">
+            <Link href="/admin/skills" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-1" /> Back to Skills
             </Link>
 
@@ -35,7 +35,7 @@ export function SkillForm({ initialData }: SkillFormProps) {
                 <h1 className="text-3xl font-bold tracking-tight">
                     {initialData ? "Edit Skill" : "Add Skill"}
                 </h1>
-                <p className="text-secondary mt-1">
+                <p className="text-muted-foreground mt-1">
                     {initialData ? "Update skill details." : `Add a new ${defaultType.toLowerCase()} skill.`}
                 </p>
             </header>

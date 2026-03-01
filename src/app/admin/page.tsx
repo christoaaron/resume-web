@@ -8,7 +8,10 @@ import {
     Award,
     ArrowRight,
     LayoutDashboard,
-    Activity
+    Activity,
+    BookOpen,
+    FileSearch,
+    Clock
 } from "lucide-react";
 import { getVisitorStats } from "@/app/actions/analytics";
 
@@ -61,6 +64,22 @@ const adminSections = [
         color: "text-cyan-500",
         bg: "bg-cyan-500/10",
     },
+    {
+        title: "Insights (Blog)",
+        description: "Share your thoughts and write blog articles.",
+        icon: BookOpen,
+        href: "/admin/insights",
+        color: "text-indigo-500",
+        bg: "bg-indigo-500/10",
+    },
+    {
+        title: "Case Studies",
+        description: "Publish detailed case studies about your work.",
+        icon: FileSearch,
+        href: "/admin/case-studies",
+        color: "text-orange-500",
+        bg: "bg-orange-500/10",
+    },
 ];
 
 export const revalidate = 0; // Ensure fresh stats
@@ -95,6 +114,22 @@ export default async function AdminDashboard() {
                         <div>
                             <p className="text-muted-foreground text-sm font-medium">Unique Visitors (Estimate)</p>
                             <h3 className="text-3xl font-bold">{stats.unique}</h3>
+                        </div>
+                    </div>
+                    
+                    <div className="bg-card border border-border rounded-2xl p-6 flex items-center gap-4 shadow-sm">
+                        <div className={`p-4 rounded-xl ${stats.lastCronStatus === 'SUCCESS' ? 'bg-blue-500/10 text-blue-500' : stats.lastCronStatus === 'ERROR' ? 'bg-red-500/10 text-red-500' : 'bg-gray-500/10 text-gray-500'}`}>
+                            <Clock className="w-6 h-6" />
+                        </div>
+                        <div>
+                            <p className="text-muted-foreground text-sm font-medium">Last Keep-Alive Ping</p>
+                            <h3 className="text-xl font-bold">
+                                {stats.lastCronRun 
+                                    ? new Date(stats.lastCronRun).toLocaleString(undefined, {
+                                        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                                      }) 
+                                    : "Never"}
+                            </h3>
                         </div>
                     </div>
                 </div>

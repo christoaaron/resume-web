@@ -25,7 +25,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">
-            <Link href="/admin/projects" className="flex items-center text-sm text-secondary hover:text-primary mb-8 transition-colors">
+            <Link href="/admin/projects" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-1" /> Back to Projects
             </Link>
 
@@ -33,7 +33,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
                 <h1 className="text-3xl font-bold tracking-tight">
                     {initialData ? "Edit Project" : "New Project"}
                 </h1>
-                <p className="text-secondary mt-1">
+                <p className="text-muted-foreground mt-1">
                     {initialData ? "Update existing project details." : "Add a new project to your portfolio."}
                 </p>
             </header>
@@ -95,7 +95,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Description</label>
-                    <p className="text-xs text-secondary">Separate points with new lines.</p>
+                    <p className="text-xs text-muted-foreground">Separate points with new lines.</p>
                     <textarea
                         name="description"
                         rows={6}

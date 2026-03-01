@@ -22,7 +22,7 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">
-            <Link href="/admin/organizations" className="flex items-center text-sm text-secondary hover:text-primary mb-8 transition-colors">
+            <Link href="/admin/organizations" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-1" /> Back to Organizations
             </Link>
 
@@ -30,7 +30,7 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
                 <h1 className="text-3xl font-bold tracking-tight">
                     {initialData ? "Edit Organization" : "Add Organization"}
                 </h1>
-                <p className="text-secondary mt-1">
+                <p className="text-muted-foreground mt-1">
                     {initialData ? "Update existing details." : "Add a new volunteer role or affiliation."}
                 </p>
             </header>

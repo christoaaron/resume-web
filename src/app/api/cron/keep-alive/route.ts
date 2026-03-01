@@ -15,10 +15,28 @@ export async function GET(request: Request) {
         // using the Prisma client
         await prisma.visitor.count();
 
+        // Log the successful cron run
+        await prisma.cronLog.create({
+            data: {
+                jobName: 'keep-alive',
+                status: 'SUCCESS',
+            }
+        });
+
         console.log("Database pinged successfully.");
         return NextResponse.json({ success: true, message: 'Database is active and pinged successfully' });
     } catch (error: any) {
         console.error('Database ping failed:', error.message);
+        
+        // Log the failed cron run
+        await prisma.cronLog.create({
+            data: {
+                jobName: 'keep-alive',
+                status: 'ERROR',
+                message: error.message || 'Unknown error',
+            }
+        }).catch((logError: any) => console.error('Failed to save cron error log:', logError));
+
         return NextResponse.json({ success: false, error: 'Failed to ping database' }, { status: 500 });
     }
 }

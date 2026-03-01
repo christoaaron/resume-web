@@ -94,3 +94,36 @@ model Visitor {
   location  String?
   createdAt DateTime @default(now())
 }
+
+model Insight {
+  id         String   @id @default(cuid())
+  title      String
+  slug       String   @unique
+  excerpt    String?
+  content    String   // Markdown or rich text
+  coverImage String?
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model CaseStudy {
+  id         String   @id @default(cuid())
+  title      String
+  slug       String   @unique
+  summary    String?
+  content    String   // Markdown or rich text
+  coverImage String?
+  link       String?
+  published  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model CronLog {
+  id        String   @id @default(cuid())
+  jobName   String   // Name of the cron job
+  status    String   // "SUCCESS" or "ERROR"
+  message   String?
+  createdAt DateTime @default(now())
+}

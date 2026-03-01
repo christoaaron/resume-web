@@ -12,11 +12,11 @@ export default async function AdminExperiencePage() {
         <div className="min-h-screen bg-background text-foreground p-8 md:p-12 max-w-7xl mx-auto">
             <header className="flex items-center justify-between mb-12">
                 <div>
-                    <Link href="/admin" className="flex items-center text-sm text-secondary hover:text-primary mb-4 transition-colors">
+                    <Link href="/admin" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-4 transition-colors">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
                     </Link>
                     <h1 className="text-3xl font-bold tracking-tight">Experience</h1>
-                    <p className="text-secondary mt-1">Manage your work history.</p>
+                    <p className="text-muted-foreground mt-1">Manage your work history.</p>
                 </div>
                 <Link
                     href="/admin/experience/new"
@@ -29,7 +29,7 @@ export default async function AdminExperiencePage() {
             <div className="grid gap-4">
                 {experience.length === 0 ? (
                     <div className="text-center py-12 border border-dashed border-border rounded-xl bg-muted/50">
-                        <p className="text-secondary">No experience added yet.</p>
+                        <p className="text-muted-foreground">No experience added yet.</p>
                     </div>
                 ) : (
                     <div className="bg-card border border-border rounded-xl divide-y divide-border">
@@ -37,12 +37,12 @@ export default async function AdminExperiencePage() {
                             <div key={item.id} className="p-4 flex items-center justify-between group">
                                 <div>
                                     <h3 className="font-semibold text-lg">{item.title}</h3>
-                                    <p className="text-sm text-secondary">{item.subtitle} • {item.date}</p>
+                                    <p className="text-sm text-muted-foreground">{item.subtitle} • {item.date}</p>
                                 </div>
                                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Link
                                         href={`/admin/experience/${item.id}`}
-                                        className="p-2 text-secondary hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                        className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
                                     >
                                         <Pencil className="w-4 h-4" />
                                     </Link>
@@ -50,7 +50,7 @@ export default async function AdminExperiencePage() {
                                         "use server";
                                         await deleteExperience(item.id);
                                     }} className="flex items-center">
-                                        <button className="p-2 text-secondary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors flex items-center">
+                                        <button className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors flex items-center">
                                             <Trash2 className="w-4 h-4" />
                                         </button>
                                     </form>

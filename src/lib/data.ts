@@ -81,3 +81,45 @@ export const getProfile = unstable_cache(
     ["profile"],
     { tags: ["profile"], revalidate: 60 } // Reduce cache to 60s
 );
+
+export const getInsights = unstable_cache(
+    async (publishedOnly: boolean = true) => {
+        return await prisma.insight.findMany({
+            where: publishedOnly ? { published: true } : undefined,
+            orderBy: { createdAt: "desc" },
+        });
+    },
+    ["insights"],
+    { tags: ["insights"], revalidate: 3600 }
+);
+
+export const getInsightBySlug = unstable_cache(
+    async (slug: string) => {
+        return await prisma.insight.findUnique({
+            where: { slug },
+        });
+    },
+    ["insight"],
+    { tags: ["insights"], revalidate: 3600 }
+);
+
+export const getCaseStudies = unstable_cache(
+    async (publishedOnly: boolean = true) => {
+        return await prisma.caseStudy.findMany({
+            where: publishedOnly ? { published: true } : undefined,
+            orderBy: { createdAt: "desc" },
+        });
+    },
+    ["case-studies"],
+    { tags: ["case-studies"], revalidate: 3600 }
+);
+
+export const getCaseStudyBySlug = unstable_cache(
+    async (slug: string) => {
+        return await prisma.caseStudy.findUnique({
+            where: { slug },
+        });
+    },
+    ["case-study"],
+    { tags: ["case-studies"], revalidate: 3600 }
+);

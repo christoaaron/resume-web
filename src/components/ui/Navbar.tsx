@@ -7,9 +7,11 @@ import { useLenis } from "lenis/react";
 
 const links = [
     { name: "Home", href: "/" },
-    { name: "Projects", href: "#projects" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Projects", href: "/#projects" },
+    { name: "About", href: "/#about" },
+    { name: "Contact", href: "/#contact" },
+    { name: "Insights", href: "/insights" },
+    { name: "Case Studies", href: "/case-studies" },
 ];
 
 export default function Navbar({ name }: { name: string }) {
@@ -23,9 +25,9 @@ export default function Navbar({ name }: { name: string }) {
         .slice(0, 2) + ".";
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
-        if (href.startsWith("#")) {
+        if (href.startsWith("/#") && window.location.pathname === "/") {
             e.preventDefault();
-            lenis?.scrollTo(href);
+            lenis?.scrollTo(href.replace("/", ""));
         }
     };
 

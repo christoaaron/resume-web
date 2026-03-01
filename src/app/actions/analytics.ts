@@ -41,11 +41,21 @@ export async function getVisitorStats() {
             by: ['ipHash'],
         });
 
+        // Get the last cron run
+        const lastCronRun = await prisma.cronLog.findFirst({
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
         return {
             total: totalVisits,
-            unique: uniqueVisitors.length
+            unique: uniqueVisitors.length,
+            lastCronRun: lastCronRun ? lastCronRun.createdAt.toISOString() : null,
+            lastCronStatus: lastCronRun ? lastCronRun.status : null,
         };
-    } catch {
-        return { total: 0, unique: 0 };
+    } catch (error) {
+        console.error("Failed to fetch visitor stats:", error);
+        return { total: 0, unique: 0, lastCronRun: null, lastCronStatus: null };
     }
 }

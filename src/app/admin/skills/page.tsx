@@ -15,11 +15,11 @@ export default async function AdminSkillsPage() {
         <div className="min-h-screen bg-background text-foreground p-8 md:p-12 max-w-7xl mx-auto space-y-12">
             <header className="flex items-center justify-between">
                 <div>
-                    <Link href="/admin" className="flex items-center text-sm text-secondary hover:text-primary mb-4 transition-colors">
+                    <Link href="/admin" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-4 transition-colors">
                         <ArrowLeft className="w-4 h-4 mr-1" /> Back to Dashboard
                     </Link>
                     <h1 className="text-3xl font-bold tracking-tight">Skills & Certifications</h1>
-                    <p className="text-secondary mt-1">Manage your technical expertise and credentials.</p>
+                    <p className="text-muted-foreground mt-1">Manage your technical expertise and credentials.</p>
                 </div>
             </header>
 
@@ -37,7 +37,7 @@ export default async function AdminSkillsPage() {
                     </Link>
                 </div>
                 <div className="bg-card border border-border rounded-xl p-4">
-                    {hard.length === 0 ? <p className="text-secondary text-sm">No hard skills added.</p> : (
+                    {hard.length === 0 ? <p className="text-muted-foreground text-sm">No hard skills added.</p> : (
                         <div className="flex flex-wrap gap-2">
                             {hard.map((skill: any) => (
                                 <div key={skill.id} className="group flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-sm">
@@ -60,7 +60,7 @@ export default async function AdminSkillsPage() {
             <section>
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold flex items-center gap-2">
-                        <Brain className="w-5 h-5 text-secondary" /> Soft Skills
+                        <Brain className="w-5 h-5 text-muted-foreground" /> Soft Skills
                     </h2>
                     <Link
                         href="/admin/skills/new-skill?type=SOFT"
@@ -70,7 +70,7 @@ export default async function AdminSkillsPage() {
                     </Link>
                 </div>
                 <div className="bg-card border border-border rounded-xl p-4">
-                    {soft.length === 0 ? <p className="text-secondary text-sm">No soft skills added.</p> : (
+                    {soft.length === 0 ? <p className="text-muted-foreground text-sm">No soft skills added.</p> : (
                         <div className="flex flex-wrap gap-2">
                             {soft.map((skill: any) => (
                                 <div key={skill.id} className="group flex items-center gap-2 bg-muted px-3 py-1.5 rounded-full text-sm">
@@ -103,7 +103,7 @@ export default async function AdminSkillsPage() {
                 </div>
                 <div className="bg-card border border-border rounded-xl divide-y divide-border">
                     {certifications.length === 0 ? (
-                        <div className="p-4 text-secondary text-sm">No certifications added.</div>
+                        <div className="p-4 text-muted-foreground text-sm">No certifications added.</div>
                     ) : (
                         certifications.map((cert: any) => (
                             <div key={cert.id} className="p-4 flex items-center justify-between group">
@@ -111,12 +111,12 @@ export default async function AdminSkillsPage() {
                                 <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <Link
                                         href={`/admin/skills/cert/${cert.id}`}
-                                        className="p-2 text-secondary hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                        className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
                                     >
                                         <Pencil className="w-4 h-4" />
                                     </Link>
                                     <form action={async () => { "use server"; await deleteCertification(cert.id); }}>
-                                        <button className="p-2 text-secondary hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
+                                        <button className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors">
                                             <Trash2 className="w-4 h-4" />
                                         </button>
                                     </form>

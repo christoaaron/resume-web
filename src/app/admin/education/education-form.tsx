@@ -22,7 +22,7 @@ export function EducationForm({ initialData }: EducationFormProps) {
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">
-            <Link href="/admin/education" className="flex items-center text-sm text-secondary hover:text-primary mb-8 transition-colors">
+            <Link href="/admin/education" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-8 transition-colors">
                 <ArrowLeft className="w-4 h-4 mr-1" /> Back to Education
             </Link>
 
@@ -30,7 +30,7 @@ export function EducationForm({ initialData }: EducationFormProps) {
                 <h1 className="text-3xl font-bold tracking-tight">
                     {initialData ? "Edit Education" : "Add Education"}
                 </h1>
-                <p className="text-secondary mt-1">
+                <p className="text-muted-foreground mt-1">
                     {initialData ? "Update academic details." : "Add a new degree or certification."}
                 </p>
             </header>
