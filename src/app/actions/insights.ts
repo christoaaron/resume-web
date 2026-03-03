@@ -12,6 +12,7 @@ const InsightSchema = z.object({
     content: z.string().min(1, "Content is required"),
     coverImage: z.string().optional(),
     published: z.boolean().default(false),
+    featured: z.boolean().default(false),
 });
 
 export async function createInsight(prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -23,6 +24,7 @@ export async function createInsight(prevState: ActionState, formData: FormData):
             content: formData.get("content"),
             coverImage: formData.get("coverImage"),
             published: formData.get("published") === "true",
+            featured: formData.get("featured") === "true",
         };
 
         const validatedFields = InsightSchema.safeParse(rawData);
@@ -47,6 +49,7 @@ export async function createInsight(prevState: ActionState, formData: FormData):
                 content: data.content,
                 coverImage: data.coverImage || null,
                 published: data.published,
+                featured: data.featured,
             },
         });
 
@@ -68,6 +71,7 @@ export async function updateInsight(id: string, prevState: ActionState, formData
             content: formData.get("content"),
             coverImage: formData.get("coverImage"),
             published: formData.get("published") === "true",
+            featured: formData.get("featured") === "true",
         };
 
         const validatedFields = InsightSchema.safeParse(rawData);
@@ -93,6 +97,7 @@ export async function updateInsight(id: string, prevState: ActionState, formData
                 content: data.content,
                 coverImage: data.coverImage || null,
                 published: data.published,
+                featured: data.featured,
             },
         });
 

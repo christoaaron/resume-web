@@ -115,6 +115,7 @@ model Insight {
   content    String   // Markdown or rich text
   coverImage String?
   published  Boolean  @default(false)
+  featured   Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
@@ -128,6 +129,7 @@ model CaseStudy {
   coverImage String?
   link       String?
   published  Boolean  @default(false)
+  featured   Boolean  @default(false)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

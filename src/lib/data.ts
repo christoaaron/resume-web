@@ -93,6 +93,17 @@ export const getInsights = unstable_cache(
     { tags: ["insights"], revalidate: 3600 }
 );
 
+export const getFeaturedInsights = unstable_cache(
+    async () => {
+        return await prisma.insight.findMany({
+            where: { published: true, featured: true },
+            orderBy: { createdAt: "desc" },
+        });
+    },
+    ["featured-insights"],
+    { tags: ["insights"], revalidate: 3600 }
+);
+
 export const getInsightBySlug = unstable_cache(
     async (slug: string) => {
         return await prisma.insight.findUnique({
@@ -111,6 +122,17 @@ export const getCaseStudies = unstable_cache(
         });
     },
     ["case-studies"],
+    { tags: ["case-studies"], revalidate: 3600 }
+);
+
+export const getFeaturedCaseStudies = unstable_cache(
+    async () => {
+        return await prisma.caseStudy.findMany({
+            where: { published: true, featured: true },
+            orderBy: { createdAt: "desc" },
+        });
+    },
+    ["featured-case-studies"],
     { tags: ["case-studies"], revalidate: 3600 }
 );
 

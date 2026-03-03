@@ -91,6 +91,16 @@ export function InsightForm({ initialData }: InsightFormProps) {
                         />
                         Published
                     </label>
+                    <label className="flex items-center gap-2 text-sm font-medium cursor-pointer">
+                        <input 
+                            type="checkbox" 
+                            name="featured" 
+                            value="true" 
+                            defaultChecked={initialData?.featured || false}
+                            className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary"
+                        />
+                        Featured (Show on Homepage)
+                    </label>
                     <p className="text-xs text-muted-foreground ml-6">If unchecked, this insight will be saved as a draft.</p>
                 </div>
 

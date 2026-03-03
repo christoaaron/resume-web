@@ -8,7 +8,9 @@ import Organizations from "@/components/sections/organizations";
 import Projects from "@/components/sections/projects";
 import Skills from "@/components/sections/skills";
 import Contact from "@/components/ui/Contact";
-import { getCertifications, getEducation, getExperience, getOrganizations, getProjects, getSkills, getProfile } from "@/lib/data";
+import FeaturedInsights from "@/components/sections/featured-insights";
+import FeaturedCaseStudies from "@/components/sections/featured-case-studies";
+import { getCertifications, getEducation, getExperience, getOrganizations, getProjects, getSkills, getProfile, getFeaturedInsights, getFeaturedCaseStudies } from "@/lib/data";
 
 // Revalidate all data every 60 seconds (ISR)
 export const revalidate = 60;
@@ -22,7 +24,9 @@ export default async function Home() {
     projectsData,
     skillsData,
     certificationsData,
-    profileData
+    profileData,
+    featuredInsightsData,
+    featuredCaseStudiesData
   ] = await Promise.all([
     getExperience(),
     getEducation(),
@@ -30,7 +34,9 @@ export default async function Home() {
     getProjects(),
     getSkills(),
     getCertifications(),
-    getProfile()
+    getProfile(),
+    getFeaturedInsights(),
+    getFeaturedCaseStudies()
   ]);
 
   // Fallback if no profile exists yet
@@ -91,6 +97,18 @@ export default async function Home() {
     return item;
   });
 
+  const cleanFeaturedInsights = featuredInsightsData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
+
+  const cleanFeaturedCaseStudies = featuredCaseStudiesData.map(({ ...item }) => {
+    delete (item as any).createdAt;
+    delete (item as any).updatedAt;
+    return item;
+  });
+
   // For profile, we need to be careful as it's a single object
   const cleanProfile = { ...profile };
   delete (cleanProfile as any).createdAt;
@@ -133,6 +151,8 @@ export default async function Home() {
       <Organizations data={cleanOrganizations} />
       <Projects data={cleanProjects} />
       <Skills skills={cleanSkills} certifications={cleanCertifications} />
+      <FeaturedInsights data={cleanFeaturedInsights} />
+      <FeaturedCaseStudies data={cleanFeaturedCaseStudies} />
       <Contact profile={cleanProfile} />
 
       <footer className="py-8 text-center text-muted-foreground text-sm border-t border-border relative z-10 bg-background">

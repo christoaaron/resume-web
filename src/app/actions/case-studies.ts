@@ -13,6 +13,7 @@ const CaseStudySchema = z.object({
     coverImage: z.string().optional(),
     link: z.string().optional(),
     published: z.boolean().default(false),
+    featured: z.boolean().default(false),
 });
 
 export async function createCaseStudy(prevState: ActionState, formData: FormData): Promise<ActionState> {
@@ -25,6 +26,7 @@ export async function createCaseStudy(prevState: ActionState, formData: FormData
             coverImage: formData.get("coverImage"),
             link: formData.get("link"),
             published: formData.get("published") === "true",
+            featured: formData.get("featured") === "true",
         };
 
         const validatedFields = CaseStudySchema.safeParse(rawData);
@@ -50,6 +52,7 @@ export async function createCaseStudy(prevState: ActionState, formData: FormData
                 coverImage: data.coverImage || null,
                 link: data.link || null,
                 published: data.published,
+                featured: data.featured,
             },
         });
 
@@ -72,6 +75,7 @@ export async function updateCaseStudy(id: string, prevState: ActionState, formDa
             coverImage: formData.get("coverImage"),
             link: formData.get("link"),
             published: formData.get("published") === "true",
+            featured: formData.get("featured") === "true",
         };
 
         const validatedFields = CaseStudySchema.safeParse(rawData);
@@ -98,6 +102,7 @@ export async function updateCaseStudy(id: string, prevState: ActionState, formDa
                 coverImage: data.coverImage || null,
                 link: data.link || null,
                 published: data.published,
+                featured: data.featured,
             },
         });
 
