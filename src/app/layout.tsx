@@ -5,6 +5,10 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cn } from "@/lib/utils";
 import { AnalyticsTracker } from "@/components/analytics-tracker";
+import { headers } from "next/headers";
+import { auth } from "@/auth";
+import { getSettings } from "@/app/actions/settings";
+import { redirect } from "next/navigation";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -84,11 +88,36 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Maintenance Mode Check
+  const session = await auth();
+  const settings = await getSettings();
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || "";
+  
+  const isAuthPage = pathname.startsWith("/auth");
+  const isAdminPage = pathname.startsWith("/admin");
+  const isApiPage = pathname.startsWith("/api");
+  const isMaintenancePage = pathname === "/maintenance";
+  const isStaticFile = /\.(.*)$/.test(pathname);
+
+  // If maintenance is ON, not logged in, and trying to access a public page, redirect away
+  if (
+    settings?.maintenanceActive &&
+    !session &&
+    !isAuthPage &&
+    !isAdminPage &&
+    !isApiPage &&
+    !isMaintenancePage &&
+    !isStaticFile
+  ) {
+    redirect("/maintenance");
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body

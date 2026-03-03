@@ -14,6 +14,8 @@ import {
     Clock
 } from "lucide-react";
 import { getVisitorStats } from "@/app/actions/analytics";
+import { getSettings } from "@/app/actions/settings";
+import { MaintenanceToggle } from "@/components/ui/maintenance-toggle";
 
 const adminSections = [
     {
@@ -86,6 +88,7 @@ export const revalidate = 0; // Ensure fresh stats
 
 export default async function AdminDashboard() {
     const stats = await getVisitorStats();
+    const settings = await getSettings();
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">
@@ -133,6 +136,12 @@ export default async function AdminDashboard() {
                         </div>
                     </div>
                 </div>
+
+                {/* MAINTENANCE MODE TOGGLE */}
+                <MaintenanceToggle 
+                    initialActive={settings.maintenanceActive} 
+                    initialMessage={settings.maintenanceMessage || ""} 
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {adminSections.map((section) => (

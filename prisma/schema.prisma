@@ -127,3 +127,10 @@ model CronLog {
   message   String?
   createdAt DateTime @default(now())
 }
+
+model SystemSettings {
+  id                 String   @id @default("global")
+  maintenanceActive  Boolean  @default(false)
+  maintenanceMessage String?  @default("We're currently making some improvements to the site to bring you a better experience. We'll be back shortly!")
+  updatedAt          DateTime @updatedAt
+}

@@ -1,6 +1,15 @@
 import { Construction } from "lucide-react";
+import { getSettings } from "@/app/actions/settings";
+import { redirect } from "next/navigation";
 
-export default function MaintenancePage() {
+export default async function MaintenancePage() {
+    const settings = await getSettings();
+
+    // If maintenance mode is turned off, redirect users back to the homepage
+    if (!settings?.maintenanceActive) {
+        redirect("/");
+    }
+
     return (
         <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-4">
             <div className="max-w-md w-full text-center space-y-6">
@@ -15,7 +24,7 @@ export default function MaintenancePage() {
                 </h1>
                 
                 <p className="text-muted-foreground text-lg">
-                    We're currently making some improvements to the site to bring you a better experience. We'll be back shortly!
+                    {settings.maintenanceMessage || "We're currently making some improvements to the site to bring you a better experience. We'll be back shortly!"}
                 </p>
                 
                 <div className="pt-8">
