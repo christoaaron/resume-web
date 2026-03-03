@@ -5,6 +5,7 @@ import { createOrganization, updateOrganization } from "@/app/actions/organizati
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useFormState } from "react-dom";
+import { useState } from "react";
 
 import { ActionState } from "@/lib/types";
 
@@ -19,6 +20,7 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
 
     const initialState: ActionState = { message: "", success: false };
     const [state, formAction] = useFormState(action, initialState);
+    const [isCurrent, setIsCurrent] = useState(!!initialData?.current);
 
     return (
         <div className="max-w-2xl mx-auto p-6 md:p-12">
@@ -76,7 +78,8 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
                                 <input
                                     type="checkbox"
                                     name="current"
-                                    defaultChecked={initialData?.current}
+                                    checked={isCurrent}
+                                    onChange={(e) => setIsCurrent(e.target.checked)}
                                     className="rounded border-border"
                                 />
                                 Current
@@ -86,7 +89,8 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
                             type="month"
                             name="endDate"
                             defaultValue={initialData?.endDate || ""}
-                            className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
+                            disabled={isCurrent}
+                            className={`w-full bg-muted border border-border rounded px-3 py-2 outline-none focus:ring-1 focus:ring-primary ${isCurrent ? 'opacity-50 cursor-not-allowed' : ''}`}
                         />
                     </div>
                 </div>
