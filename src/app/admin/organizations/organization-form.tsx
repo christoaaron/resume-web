@@ -4,6 +4,7 @@
 import { createOrganization, updateOrganization } from "@/app/actions/organizations";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { SubmitButton } from "@/components/ui/submit-button";
 import { useFormState } from "react-dom";
 import { useState } from "react";
 
@@ -106,12 +107,11 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
                 </div>
 
                 <div className="pt-4">
-                    <button
-                        type="submit"
+                    <SubmitButton
                         className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
                     >
                         {initialData ? "Save Changes" : "Add Organization"}
-                    </button>
+                    </SubmitButton>
                     {state?.message && (
                         <p className={`mt-4 text-center text-sm ${state.success ? "text-green-500" : "text-red-500"}`}>
                             {state.message}
