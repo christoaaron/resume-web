@@ -4,7 +4,9 @@
 import { createInsight, updateInsight } from "@/app/actions/insights";
 import Link from "next/link";
 import { useFormState } from "react-dom";
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ActionState } from "@/lib/types";
 
 type InsightFormProps = {
@@ -18,6 +20,7 @@ export function InsightForm({ initialData }: InsightFormProps) {
 
     const initialState: ActionState = { message: "", success: false };
     const [state, formAction] = useFormState(action, initialState);
+    const [content, setContent] = useState(initialData?.content || "");
 
     return (
         <div className="max-w-3xl mx-auto p-6 md:p-12">
@@ -105,16 +108,14 @@ export function InsightForm({ initialData }: InsightFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-medium">Content (Markdown supported)</label>
-                    <p className="text-xs text-muted-foreground">You can use standard Markdown to format your post, add images, links, and code blocks.</p>
-                    <textarea
-                        name="content"
-                        rows={16}
-                        defaultValue={initialData?.content || ""}
-                        className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none font-mono text-sm"
-                        placeholder="Write your content here..."
-                        required
+                    <label className="text-sm font-medium">Content (Rich Text)</label>
+                    <p className="text-xs text-muted-foreground">Format your post with headings, images, links, and text formatting.</p>
+                    <RichTextEditor 
+                        value={content}
+                        onChange={setContent}
+                        placeholder="Write your beautiful content here..."
                     />
+                    <input type="hidden" name="content" value={content} />
                 </div>
 
                 <div className="pt-4">

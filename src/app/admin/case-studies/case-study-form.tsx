@@ -4,7 +4,9 @@
 import { createCaseStudy, updateCaseStudy } from "@/app/actions/case-studies";
 import Link from "next/link";
 import { useFormState } from "react-dom";
+import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
+import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ActionState } from "@/lib/types";
 
 type CaseStudyFormProps = {
@@ -18,6 +20,7 @@ export function CaseStudyForm({ initialData }: CaseStudyFormProps) {
 
     const initialState: ActionState = { message: "", success: false };
     const [state, formAction] = useFormState(action, initialState);
+    const [content, setContent] = useState(initialData?.content || "");
 
     return (
         <div className="max-w-3xl mx-auto p-6 md:p-12">
@@ -117,16 +120,14 @@ export function CaseStudyForm({ initialData }: CaseStudyFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="text-sm font-medium">Markdown Content</label>
-                    <p className="text-xs text-muted-foreground">Break down your case study (Problem, Approach, Solutions, Results).</p>
-                    <textarea
-                        name="content"
-                        rows={16}
-                        defaultValue={initialData?.content || ""}
-                        className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none font-mono text-sm"
-                        placeholder="## The Problem&#10;...&#10;## The Solution&#10;..."
-                        required
+                    <label className="text-sm font-medium">Rich Text Content</label>
+                    <p className="text-xs text-muted-foreground">Break down your case study visually (Problem, Approach, Solutions, Results).</p>
+                    <RichTextEditor 
+                        value={content}
+                        onChange={setContent}
+                        placeholder="Write your full case study here..."
                     />
+                    <input type="hidden" name="content" value={content} />
                 </div>
 
                 <div className="pt-4">
