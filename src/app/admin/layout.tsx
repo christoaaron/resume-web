@@ -24,7 +24,7 @@ export default async function AdminLayout({
                         "use server"
                         await signOut()
                     }}>
-                        <button className="text-sm text-red-500 hover:text-red-600">Sign Out</button>
+                        <button className="block w-full text-left px-4 py-2 rounded text-sm text-red-500 hover:text-red-600 hover:bg-red-500/10 transition-colors">Sign Out</button>
                     </form>
                 </div>
             </aside>
