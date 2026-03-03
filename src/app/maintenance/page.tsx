@@ -23,9 +23,9 @@ export default async function MaintenancePage() {
                     Under Maintenance
                 </h1>
                 
-                <p className="text-muted-foreground text-lg">
+                <div className="text-muted-foreground text-lg whitespace-pre-wrap">
                     {settings.maintenanceMessage || "We're currently making some improvements to the site to bring you a better experience. We'll be back shortly!"}
-                </p>
+                </div>
                 
                 <div className="pt-8">
                     <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
