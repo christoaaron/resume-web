@@ -17,7 +17,7 @@ export default function Projects({ data }: { data: SafeProject[] }) {
                     <Card delay={0} className="flex flex-col h-full hover:border-r-4 hover:border-b-4 hover:border-primary transition-all duration-300">
                         <div className="mb-4">
                             <span className="text-xs font-mono text-primary uppercase tracking-widest bg-primary/10 px-2 py-1 rounded-sm">
-                                {data[0].date.split("-")[0].trim()}
+                                {data[0].date?.split("-")[0].trim() || ""}
                             </span>
                         </div>
 

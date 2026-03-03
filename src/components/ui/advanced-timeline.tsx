@@ -6,7 +6,7 @@ interface TimelineItemProps {
     title: string;
     subtitle: string;
     location?: string | null;
-    date: string;
+    date: string | null;
     description?: string[];
 }
 

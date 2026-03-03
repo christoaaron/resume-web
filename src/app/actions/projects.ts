@@ -9,7 +9,9 @@ const ProjectSchema = z.object({
     title: z.string().min(1, "Title is required"),
     subtitle: z.string().min(1, "Subtitle is required"),
     location: z.string().optional(),
-    date: z.string().min(1, "Date is required"),
+    startDate: z.string().min(1, "Start Date is required"),
+    endDate: z.string().optional(),
+    current: z.boolean().default(false),
     description: z.string().optional(),
     link: z.string().optional(),
 });
@@ -20,7 +22,9 @@ export async function createProject(prevState: ActionState, formData: FormData):
             title: formData.get("title"),
             subtitle: formData.get("subtitle"),
             location: formData.get("location"),
-            date: formData.get("date"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            current: formData.get("current") === "on",
             description: formData.get("description"),
             link: formData.get("link"),
         };
@@ -31,12 +35,19 @@ export async function createProject(prevState: ActionState, formData: FormData):
             return { message: "Invalid fields", errors: validatedFields.error.flatten().fieldErrors };
         }
 
-        const { description, location, link, ...data } = validatedFields.data;
+        const { description, location, link, startDate, endDate, current, ...data } = validatedFields.data;
         const descArray = description ? description.split("\n").filter(line => line.trim() !== "") : [];
+
+        const { generateDateString } = await import("@/lib/utils");
+        const dateStr = generateDateString(startDate, endDate, current);
 
         await prisma.project.create({
             data: {
                 ...data,
+                startDate,
+                endDate: current ? null : (endDate || null),
+                current,
+                date: dateStr,
                 location: location || null,
                 description: descArray,
                 link: link || null,
@@ -58,7 +69,9 @@ export async function updateProject(id: string, prevState: ActionState, formData
             title: formData.get("title"),
             subtitle: formData.get("subtitle"),
             location: formData.get("location"),
-            date: formData.get("date"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            current: formData.get("current") === "on",
             description: formData.get("description"),
             link: formData.get("link"),
         };
@@ -69,13 +82,20 @@ export async function updateProject(id: string, prevState: ActionState, formData
             return { message: "Invalid fields", errors: validatedFields.error.flatten().fieldErrors };
         }
 
-        const { description, location, link, ...data } = validatedFields.data;
+        const { description, location, link, startDate, endDate, current, ...data } = validatedFields.data;
         const descArray = description ? description.split("\n").filter(line => line.trim() !== "") : [];
+
+        const { generateDateString } = await import("@/lib/utils");
+        const dateStr = generateDateString(startDate, endDate, current);
 
         await prisma.project.update({
             where: { id },
             data: {
                 ...data,
+                startDate,
+                endDate: current ? null : (endDate || null),
+                current,
+                date: dateStr,
                 location: location || null,
                 description: descArray,
                 link: link || null,

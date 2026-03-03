@@ -60,24 +60,45 @@ export function OrganizationForm({ initialData }: OrganizationFormProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Date / Tenure</label>
+                        <label className="text-sm font-medium">Start Date</label>
                         <input
-                            name="date"
-                            defaultValue={initialData?.date || ""}
+                            type="month"
+                            name="startDate"
+                            defaultValue={initialData?.startDate || ""}
                             className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
-                            placeholder="e.g. 2023 - Present"
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <label className="text-sm font-medium">Location (Optional)</label>
+                        <div className="flex items-center justify-between">
+                            <label className="text-sm font-medium">End Date</label>
+                            <label className="text-xs flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    name="current"
+                                    defaultChecked={initialData?.current}
+                                    className="rounded border-border"
+                                />
+                                Current
+                            </label>
+                        </div>
                         <input
-                            name="location"
-                            defaultValue={initialData?.location || ""}
+                            type="month"
+                            name="endDate"
+                            defaultValue={initialData?.endDate || ""}
                             className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
-                            placeholder="e.g. Remote"
                         />
                     </div>
+                </div>
+
+                <div className="space-y-2">
+                    <label className="text-sm font-medium">Location (Optional)</label>
+                    <input
+                        name="location"
+                        defaultValue={initialData?.location || ""}
+                        className="w-full bg-muted border border-border rounded px-3 py-2 focus:ring-1 focus:ring-primary outline-none"
+                        placeholder="e.g. Remote"
+                    />
                 </div>
 
                 <div className="pt-4">

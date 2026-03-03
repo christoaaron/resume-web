@@ -10,7 +10,9 @@ const EducationSchema = z.object({
     title: z.string().min(1, "Degree/Title is required"),
     subtitle: z.string().min(1, "School/Subtitle is required"),
     location: z.string().optional(),
-    date: z.string().min(1, "Date is required"),
+    startDate: z.string().min(1, "Start Date is required"),
+    endDate: z.string().optional(),
+    current: z.boolean().default(false),
 });
 
 export async function createEducation(prevState: ActionState, formData: FormData) {
@@ -19,7 +21,9 @@ export async function createEducation(prevState: ActionState, formData: FormData
             title: formData.get("title"),
             subtitle: formData.get("subtitle"),
             location: formData.get("location"),
-            date: formData.get("date"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            current: formData.get("current") === "on",
         };
 
         const validatedFields = EducationSchema.safeParse(rawData);
@@ -28,11 +32,18 @@ export async function createEducation(prevState: ActionState, formData: FormData
             return { message: "Invalid fields", errors: validatedFields.error.flatten().fieldErrors };
         }
 
-        const { location, ...data } = validatedFields.data;
+        const { location, startDate, endDate, current, ...data } = validatedFields.data;
+
+        const { generateDateString } = await import("@/lib/utils");
+        const dateStr = generateDateString(startDate, endDate, current);
 
         await prisma.education.create({
             data: {
                 ...data,
+                startDate,
+                endDate: current ? null : (endDate || null),
+                current,
+                date: dateStr,
                 location: location || null,
             },
         });
@@ -52,7 +63,9 @@ export async function updateEducation(id: string, prevState: ActionState, formDa
             title: formData.get("title"),
             subtitle: formData.get("subtitle"),
             location: formData.get("location"),
-            date: formData.get("date"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            current: formData.get("current") === "on",
         };
 
         const validatedFields = EducationSchema.safeParse(rawData);
@@ -61,12 +74,19 @@ export async function updateEducation(id: string, prevState: ActionState, formDa
             return { message: "Invalid fields", errors: validatedFields.error.flatten().fieldErrors };
         }
 
-        const { location, ...data } = validatedFields.data;
+        const { location, startDate, endDate, current, ...data } = validatedFields.data;
+
+        const { generateDateString } = await import("@/lib/utils");
+        const dateStr = generateDateString(startDate, endDate, current);
 
         await prisma.education.update({
             where: { id },
             data: {
                 ...data,
+                startDate,
+                endDate: current ? null : (endDate || null),
+                current,
+                date: dateStr,
                 location: location || null,
             },
         });

@@ -13,7 +13,10 @@ model Experience {
   title       String
   subtitle    String
   location    String?
-  date        String
+  date        String?
+  startDate   String?
+  endDate     String?
+  current     Boolean  @default(false)
   description String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -24,7 +27,10 @@ model Education {
   title     String
   subtitle  String
   location  String?
-  date      String
+  date      String?
+  startDate String?
+  endDate   String?
+  current   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -34,7 +40,10 @@ model Organization {
   title     String
   subtitle  String
   location  String?
-  date      String
+  date      String?
+  startDate String?
+  endDate   String?
+  current   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -44,7 +53,10 @@ model Project {
   title       String
   subtitle    String
   location    String?
-  date        String
+  date        String?
+  startDate   String?
+  endDate     String?
+  current     Boolean  @default(false)
   description String[]
   link        String?
   createdAt   DateTime @default(now())

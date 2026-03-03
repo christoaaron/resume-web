@@ -9,7 +9,9 @@ const ExperienceSchema = z.object({
     title: z.string().min(1, "Title is required"),
     subtitle: z.string().min(1, "Subtitle is required"),
     location: z.string().optional(),
-    date: z.string().min(1, "Date is required"),
+    startDate: z.string().min(1, "Start Date is required"),
+    endDate: z.string().optional(),
+    current: z.boolean().default(false),
     description: z.string().optional(),
 });
 
@@ -19,7 +21,9 @@ export async function createExperience(prevState: ActionState, formData: FormDat
             title: formData.get("title"),
             subtitle: formData.get("subtitle"),
             location: formData.get("location"),
-            date: formData.get("date"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            current: formData.get("current") === "on",
             description: formData.get("description"),
         };
 
@@ -29,12 +33,19 @@ export async function createExperience(prevState: ActionState, formData: FormDat
             return { message: "Invalid fields", errors: validatedFields.error.flatten().fieldErrors };
         }
 
-        const { description, location, ...data } = validatedFields.data;
+        const { description, location, startDate, endDate, current, ...data } = validatedFields.data;
         const descArray = description ? description.split("\n").filter(line => line.trim() !== "") : [];
+
+        const { generateDateString } = await import("@/lib/utils");
+        const dateStr = generateDateString(startDate, endDate, current);
 
         await prisma.experience.create({
             data: {
                 ...data,
+                startDate,
+                endDate: current ? null : (endDate || null),
+                current,
+                date: dateStr,
                 location: location || null,
                 description: descArray,
             },
@@ -55,7 +66,9 @@ export async function updateExperience(id: string, prevState: ActionState, formD
             title: formData.get("title"),
             subtitle: formData.get("subtitle"),
             location: formData.get("location"),
-            date: formData.get("date"),
+            startDate: formData.get("startDate"),
+            endDate: formData.get("endDate"),
+            current: formData.get("current") === "on",
             description: formData.get("description"),
         };
 
@@ -65,13 +78,20 @@ export async function updateExperience(id: string, prevState: ActionState, formD
             return { message: "Invalid fields", errors: validatedFields.error.flatten().fieldErrors };
         }
 
-        const { description, location, ...data } = validatedFields.data;
+        const { description, location, startDate, endDate, current, ...data } = validatedFields.data;
         const descArray = description ? description.split("\n").filter(line => line.trim() !== "") : [];
+
+        const { generateDateString } = await import("@/lib/utils");
+        const dateStr = generateDateString(startDate, endDate, current);
 
         await prisma.experience.update({
             where: { id },
             data: {
                 ...data,
+                startDate,
+                endDate: current ? null : (endDate || null),
+                current,
+                date: dateStr,
                 location: location || null,
                 description: descArray,
             },

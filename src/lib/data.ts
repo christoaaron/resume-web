@@ -4,7 +4,7 @@ import { unstable_cache } from "next/cache";
 export const getProjects = unstable_cache(
     async () => {
         return await prisma.project.findMany({
-            orderBy: { date: "desc" },
+            orderBy: [{ current: "desc" }, { endDate: "desc" }, { startDate: "desc" }],
         });
     },
     ["projects"],
@@ -14,7 +14,7 @@ export const getProjects = unstable_cache(
 export const getExperience = unstable_cache(
     async () => {
         return await prisma.experience.findMany({
-            orderBy: { date: "desc" },
+            orderBy: [{ current: "desc" }, { endDate: "desc" }, { startDate: "desc" }],
         });
     },
     ["experience"],
@@ -24,7 +24,7 @@ export const getExperience = unstable_cache(
 export const getEducation = unstable_cache(
     async () => {
         return await prisma.education.findMany({
-            orderBy: { date: "desc" },
+            orderBy: [{ current: "desc" }, { endDate: "desc" }, { startDate: "desc" }],
         });
     },
     ["education"],
@@ -34,7 +34,7 @@ export const getEducation = unstable_cache(
 export const getOrganizations = unstable_cache(
     async () => {
         return await prisma.organization.findMany({
-            orderBy: { date: "desc" },
+            orderBy: [{ current: "desc" }, { endDate: "desc" }, { startDate: "desc" }],
         });
     },
     ["organizations"],
