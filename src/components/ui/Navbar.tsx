@@ -42,7 +42,7 @@ export default function Navbar({ name }: { name: string }) {
                 <span className="font-bold text-lg tracking-tight">{initials}</span>
             </div>
 
-            <div className="pointer-events-auto flex items-center gap-6 bg-background/80 backdrop-blur-md px-6 py-3 rounded-full border border-border/50 shadow-sm">
+            <div className="pointer-events-auto flex items-center gap-6 bg-background/80 backdrop-blur-md px-6 py-3 rounded-full border border-border/80 dark:border-border shadow-md">
                 {links.map((link) => (
                     <Link
                         key={link.name}
