@@ -3,6 +3,7 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CaseStudy } from "@prisma/client";
+import { stripHtml } from "@/lib/utils";
 
 export default function FeaturedCaseStudies({ data }: { data: CaseStudy[] }) {
     if (!data || data.length === 0) return null;
@@ -39,7 +40,7 @@ export default function FeaturedCaseStudies({ data }: { data: CaseStudy[] }) {
                                 </Link>
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                {study.summary || study.content.substring(0, 150) + "..."}
+                                {stripHtml(study.summary || study.content).substring(0, 160)}...
                             </p>
                             <div className="flex items-center gap-4 pt-4">
                                 <Link 

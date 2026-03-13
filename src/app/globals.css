@@ -81,11 +81,17 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
 body {
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: var(--font-jakarta), sans-serif;
   overflow-x: hidden;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -138,3 +144,137 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+main {
+    overflow-x: hidden;
+}
+
+
+/* ─── Quill alignment classes (used in editor & public pages) ─── */
+.ql-align-center { text-align: center; }
+.ql-align-right  { text-align: right; }
+.ql-align-justify { text-align: justify; }
+
+/* ─── quill-prose: clean blog-standard prose styling ─── */
+.quill-prose {
+    /* Typography */
+    font-size: 1.0625rem;   /* ~17px – comfortable reading size */
+    line-height: 1.75;
+    color: hsl(var(--foreground) / 0.88);
+    font-family: var(--font-jakarta), sans-serif;
+
+    /* Word wrapping – the only correct setting for blog prose */
+    word-break: normal;      /* never split mid-character */
+    overflow-wrap: break-word; /* wrap long single tokens (URLs, etc.) */
+    hyphens: none;           /* no auto-hyphenation */
+
+    /* Width */
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Headings */
+.quill-prose h1,
+.quill-prose h2,
+.quill-prose h3,
+.quill-prose h4 {
+    color: hsl(var(--foreground));
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.25;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    /* Headings wrap at word boundaries only – never mid-word */
+    word-break: normal;
+    overflow-wrap: normal;
+}
+.quill-prose h1 { font-size: 2rem; }
+.quill-prose h2 { font-size: 1.5rem; }
+.quill-prose h3 { font-size: 1.25rem; }
+.quill-prose h4 { font-size: 1.125rem; }
+
+/* Paragraphs */
+.quill-prose p {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+/* Lists */
+.quill-prose ul,
+.quill-prose ol {
+    margin: 1.25rem 0;
+    padding-left: 1.75rem;
+}
+.quill-prose li {
+    margin-bottom: 0.4rem;
+}
+.quill-prose ul { list-style-type: disc; }
+.quill-prose ol { list-style-type: decimal; }
+
+/* Blockquote */
+.quill-prose blockquote {
+    border-left: 3px solid hsl(var(--foreground) / 0.2);
+    padding-left: 1.25rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
+}
+
+/* Code */
+.quill-prose code {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+    padding: 0.1em 0.35em;
+    font-size: 0.9em;
+    font-family: monospace;
+    word-break: break-all; /* URLs / long tokens in code are ok to break */
+}
+.quill-prose pre {
+    background: hsl(var(--muted));
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+    white-space: pre;
+}
+.quill-prose pre code {
+    background: none;
+    padding: 0;
+    font-size: 0.875rem;
+    word-break: normal;
+}
+
+/* Images & media */
+.quill-prose img,
+.quill-prose video,
+.quill-prose iframe {
+    max-width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    margin: 2.5rem auto;
+    display: block;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+}
+
+/* Quill alignment on images */
+.quill-prose .ql-align-center img { margin-left: auto; margin-right: auto; }
+.quill-prose .ql-align-right  img { margin-left: auto; margin-right: 0; }
+
+/* Links */
+.quill-prose a {
+    color: hsl(var(--foreground));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.quill-prose a:hover { opacity: 0.7; }
+
+/* HR */
+.quill-prose hr {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+    margin: 3rem 0;
+}
+
+/* Strong / em */
+.quill-prose strong { font-weight: 700; }
+.quill-prose em { font-style: italic; }

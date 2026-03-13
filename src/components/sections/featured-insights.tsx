@@ -2,9 +2,9 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Insight } from "@prisma/client";
+import { stripHtml } from "@/lib/utils";
 
-export default function FeaturedInsights({ data }: { data: Insight[] }) {
+export default function FeaturedInsights({ data }: { data: any[] }) {
     if (!data || data.length === 0) return null;
 
     return (
@@ -35,8 +35,8 @@ export default function FeaturedInsights({ data }: { data: Insight[] }) {
                                     <time suppressHydrationWarning>{new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
                                 </div>
                                 <h2 className="text-2xl font-bold mb-3 group-hover:text-primary transition-colors">{post.title}</h2>
-                                <p className="text-muted-foreground line-clamp-3 mb-6 flex-1">
-                                    {post.excerpt || post.content.substring(0, 150) + "..."}
+                                <p className="text-muted-foreground line-clamp-3 mb-6 flex-1 text-sm leading-relaxed">
+                                    {post.excerpt ? stripHtml(post.excerpt).substring(0, 160) : "Learn more about this insight."}
                                 </p>
                                 <div className="text-sm font-medium text-primary mt-auto flex items-center gap-1">
                                     Read more <ArrowRight className="w-4 h-4" />

@@ -20,3 +20,32 @@ export function generateDateString(startDate: string | null | undefined, endDate
   if (endDate) return `${startStr} - ${formatDateMonthYear(endDate)}`;
   return startStr;
 }
+
+export function stripHtml(html: string): string {
+  if (!html) return "";
+  const cleaned = html
+    .replace(/<[^>]*>?/gm, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    // Strip soft hyphens, zero-width spaces, and other hidden break characters
+    .replace(/[\u00AD\u200B\u200C\u200D\u2060\uFEFF]/g, '')
+    .replace(/\s+/g, " ")
+    .trim();
+  return cleaned;
+}
+
+export function cleanText(text: string): string {
+  if (!text) return "";
+  return text
+    .replace(/[\u00AD\u200B\u200C\u200D\u2060\uFEFF]/g, '')
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function stripHiddenChars(text: string): string {
+  if (!text) return "";
+  return text.replace(/[\u00AD\u200B\u200C\u200D\u2060\uFEFF]/g, '');
+}

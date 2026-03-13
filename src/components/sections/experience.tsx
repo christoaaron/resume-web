@@ -13,7 +13,7 @@ export default function Experience({ data }: { data: SafeExperience[] }) {
             <SectionHeader title="Experience" description="Professional journey and internships." />
 
             {data.length === 1 ? (
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-4xl">
                     <TimelineItem item={data[0]} index={0} />
                 </div>
             ) : (

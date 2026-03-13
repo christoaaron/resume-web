@@ -5,7 +5,7 @@ import { createInsight, updateInsight } from "@/app/actions/insights";
 import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Info } from "lucide-react";
 import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ActionState } from "@/lib/types";
 
@@ -75,6 +75,7 @@ export function InsightForm({ initialData }: InsightFormProps) {
 
                 <div className="space-y-2">
                     <label className="text-sm font-medium">Cover Image URL (Optional)</label>
+                    <p className="text-xs text-muted-foreground">Panoramic images work best. Recommended: <span className="text-primary/80 font-mono">2560 x 850px</span> (3:1 ratio).</p>
                     <input
                         name="coverImage"
                         defaultValue={initialData?.coverImage || ""}
@@ -107,21 +108,38 @@ export function InsightForm({ initialData }: InsightFormProps) {
                     <p className="text-xs text-muted-foreground ml-6">If unchecked, this insight will be saved as a draft.</p>
                 </div>
 
-                <div className="space-y-2">
-                    <label className="text-sm font-medium">Content (Rich Text)</label>
-                    <p className="text-xs text-muted-foreground">Format your post with headings, images, links, and text formatting.</p>
-                    <RichTextEditor 
-                        value={content}
-                        onChange={setContent}
-                        placeholder="Write your beautiful content here..."
+                <div className="space-y-4">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium">Notion Link or Embed Code</label>
+                        <p className="text-xs text-muted-foreground">Paste the "Share to Web" link from Notion or an iframe embed code.</p>
+                    </div>
+                    
+                    <div className="bg-primary/5 border border-primary/10 rounded-xl p-4 flex gap-3">
+                        <Info className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                        <div className="space-y-1">
+                            <p className="text-xs font-bold text-primary uppercase tracking-wider">How to get this?</p>
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                                1. In Notion, click <strong className="text-foreground">Share</strong> at the top right.<br/>
+                                2. Turn on <strong className="text-foreground">Publish to Web</strong>.<br/>
+                                3. Copy the link and paste it here.
+                            </p>
+                        </div>
+                    </div>
+
+                    <textarea
+                        name="content"
+                        rows={6}
+                        defaultValue={initialData?.content || ""}
+                        className="w-full bg-muted border border-border rounded-xl px-4 py-3 focus:ring-1 focus:ring-primary outline-none font-mono text-sm"
+                        placeholder="https://www.notion.so/My-Post-..."
+                        required
                     />
-                    <input type="hidden" name="content" value={content} />
                 </div>
 
                 <div className="pt-4">
                     <button
                         type="submit"
-                        className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                        className="w-full bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium cursor-pointer"
                     >
                         {initialData ? "Save Changes" : "Create Insight"}
                     </button>

@@ -13,7 +13,7 @@ export default function Organizations({ data }: { data: SafeOrganization[] }) {
             <SectionHeader title="Organizations" description="Leadership and volunteer service." />
 
             {data.length === 1 ? (
-                <div className="max-w-3xl mx-auto">
+                <div className="max-w-4xl">
                     <TimelineItem item={data[0]} index={0} />
                 </div>
             ) : (

@@ -4,7 +4,7 @@ interface TimelineItemProps {
     title: string;
     subtitle: string;
     location?: string | null;
-    date: string | null;
+    date: string;
     description?: string[];
 }
 
@@ -25,9 +25,9 @@ export function TimelineItem({ item, index }: { item: TimelineItemProps; index: 
             </div>
 
             {item.description && item.description.length > 0 && (
-                <ul className="mt-4 space-y-2 list-disc list-inside text-muted-foreground text-sm leading-relaxed">
+                <ul className="mt-4 space-y-2 list-disc ml-5 text-muted-foreground text-sm leading-relaxed">
                     {item.description.map((desc, i) => (
-                        <li key={i} className="pl-2 -indent-2 ml-2">{desc}</li>
+                        <li key={i}>{desc}</li>
                     ))}
                 </ul>
             )}
