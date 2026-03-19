@@ -7,25 +7,26 @@ import { useLenis } from "lenis/react";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 
-const links = [
-    { name: "Home", href: "/" },
-    { name: "Projects", href: "/#projects" },
-    { name: "About", href: "/#about" },
-    { name: "Contact", href: "/#contact" },
-    { name: "Insights", href: "/insights" },
-    { name: "Case Studies", href: "/case-studies" },
-];
+export default function Navbar({ 
+    name, 
+    hasInsights = true, 
+    hasCaseStudies = true 
+}: { 
+    name: string;
+    hasInsights?: boolean;
+    hasCaseStudies?: boolean;
+}) {
+    const links = [
+        { name: "Home", href: "/" },
+        { name: "Projects", href: "/#projects" },
+        { name: "About", href: "/#about" },
+        { name: "Contact", href: "/#contact" },
+        ...(hasInsights ? [{ name: "Insights", href: "/insights" }] : []),
+        ...(hasCaseStudies ? [{ name: "Case Studies", href: "/case-studies" }] : []),
+    ];
 
-export default function Navbar({ name }: { name: string }) {
     const lenis = useLenis();
     const [isOpen, setIsOpen] = useState(false);
-
-    const initials = name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2) + ".";
 
     // Lock scroll when mobile menu is open
     useEffect(() => {
@@ -50,14 +51,9 @@ export default function Navbar({ name }: { name: string }) {
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 pointer-events-none"
+                className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center px-6 py-8 md:px-12 pointer-events-none"
             >
-                {/* Logo/Initials */}
-                <div className="pointer-events-auto bg-background/80 backdrop-blur-md px-4 py-2 rounded-full border border-border/80 shadow-sm">
-                    <Link href="/" onClick={(e) => handleScroll(e, "/")} className="font-bold text-lg tracking-tight">{initials}</Link>
-                </div>
-
-                {/* Desktop Menu */}
+                {/* Desktop Menu - Now Centered */}
                 <div className="hidden md:flex pointer-events-auto items-center gap-6 bg-background/80 backdrop-blur-md px-6 py-3 rounded-full border border-border/80 dark:border-border shadow-md">
                     {links.map((link) => (
                         <Link
@@ -73,8 +69,8 @@ export default function Navbar({ name }: { name: string }) {
                     <ThemeToggle />
                 </div>
 
-                {/* Mobile Menu Trigger & Theme Toggle */}
-                <div className="flex md:hidden pointer-events-auto items-center gap-3">
+                {/* Mobile Menu Trigger & Theme Toggle - Stays on right but centered in its own way if needed */}
+                <div className="flex md:hidden pointer-events-auto items-center justify-between w-full">
                     <div className="bg-background/80 backdrop-blur-md p-2 rounded-full border border-border/80 shadow-md">
                         <ThemeToggle />
                     </div>

@@ -88,6 +88,9 @@ export const metadata: Metadata = {
   },
 };
 
+import { getFeaturedInsights, getFeaturedCaseStudies } from "@/lib/data";
+import FloatingNotification from "@/components/ui/FloatingNotification";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -98,7 +101,18 @@ export default async function RootLayout({
   const settings = await getSettings();
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
-  
+
+  // Fetch featured items for notification hub
+  const [featuredInsights, featuredCaseStudies] = await Promise.all([
+    getFeaturedInsights(),
+    getFeaturedCaseStudies()
+  ]);
+
+  const notificationItems = [
+    ...featuredInsights.slice(0, 1).map(i => ({ id: i.id, title: i.title, slug: i.slug, type: 'insight' as const })),
+    ...featuredCaseStudies.slice(0, 1).map(i => ({ id: i.id, title: i.title, slug: i.slug, type: 'case-study' as const }))
+  ];
+
   const isAuthPage = pathname.startsWith("/auth");
   const isAdminPage = pathname.startsWith("/admin");
   const isApiPage = pathname.startsWith("/api");
@@ -129,6 +143,7 @@ export default async function RootLayout({
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           <AnalyticsTracker />
           <SmoothScroll>{children}</SmoothScroll>
+          {!isAdminPage && <FloatingNotification items={notificationItems} />}
         </ThemeProvider>
       </body>
     </html>

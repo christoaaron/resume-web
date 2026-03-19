@@ -143,16 +143,27 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify([jsonLd, websiteJsonLd]) }}
       />
-      <Navbar name={cleanProfile.name} />
-      <Hero name={cleanProfile.name} headline={cleanProfile.headline} />
+      <Navbar 
+        name={cleanProfile.name} 
+        hasInsights={cleanFeaturedInsights.length > 0}
+        hasCaseStudies={cleanFeaturedCaseStudies.length > 0}
+      />
+      <Hero 
+        name={cleanProfile.name} 
+        headline={cleanProfile.headline} 
+        featuredCaseStudy={cleanFeaturedCaseStudies[0] ? {
+          title: cleanFeaturedCaseStudies[0].title,
+          slug: cleanFeaturedCaseStudies[0].slug
+        } : undefined}
+      />
       <About bio={cleanProfile.bio} skills={featuredHardSkills} />
       <Experience data={cleanExperience} />
       <Education data={cleanEducation} />
       <Organizations data={cleanOrganizations} />
       <Projects data={cleanProjects} />
       <Skills skills={cleanSkills} certifications={cleanCertifications} />
-      <FeaturedInsights data={cleanFeaturedInsights} />
-      <FeaturedCaseStudies data={cleanFeaturedCaseStudies} />
+      {cleanFeaturedInsights.length > 0 && <FeaturedInsights data={cleanFeaturedInsights} />}
+      {cleanFeaturedCaseStudies.length > 0 && <FeaturedCaseStudies data={cleanFeaturedCaseStudies} />}
       <Contact profile={cleanProfile} />
 
       <footer className="py-8 text-center text-muted-foreground text-sm border-t border-border relative z-10 bg-background">

@@ -1,4 +1,4 @@
-import { getInsightBySlug, getProfile } from "@/lib/data";
+import { getInsightBySlug, getProfile, getCaseStudies, getInsights } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
@@ -12,8 +12,13 @@ export const revalidate = 3600;
 
 export default async function InsightDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    const post = await getInsightBySlug(slug);
-    const profile = await getProfile();
+    
+    const [post, profile, allInsights, allCaseStudies] = await Promise.all([
+        getInsightBySlug(slug),
+        getProfile(),
+        getInsights(true),
+        getCaseStudies(true)
+    ]);
 
     if (!post || !post.published) {
         notFound();
@@ -21,7 +26,11 @@ export default async function InsightDetailPage({ params }: { params: Promise<{ 
 
     return (
         <main className="min-h-screen bg-background pb-24">
-            <Navbar name={profile.name} />
+            <Navbar 
+                name={profile.name} 
+                hasInsights={allInsights.length > 0}
+                hasCaseStudies={allCaseStudies.length > 0}
+            />
 
             <article className="pt-36 md:pt-44 overflow-x-hidden">
                 {/* ── Header ── */}

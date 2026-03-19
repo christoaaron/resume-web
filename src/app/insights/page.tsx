@@ -1,4 +1,4 @@
-import { getInsights, getProfile } from "@/lib/data";
+import { getInsights, getProfile, getCaseStudies } from "@/lib/data";
 import Link from "next/link";
 import Navbar from "@/components/ui/Navbar";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -10,11 +10,16 @@ export const revalidate = 3600;
 export default async function InsightsPage() {
     // Only fetch published ones publicly
     const insights = await getInsights(true);
+    const caseStudies = await getCaseStudies(true);
     const profile = await getProfile();
 
     return (
         <main className="min-h-screen bg-background pt-32 pb-16">
-            <Navbar name={profile.name} />
+            <Navbar 
+                name={profile.name} 
+                hasInsights={insights.length > 0} 
+                hasCaseStudies={caseStudies.length > 0} 
+            />
             
             <div className="max-w-7xl mx-auto px-6 md:px-12">
                 <header className="mb-24">
