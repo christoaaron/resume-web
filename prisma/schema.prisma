@@ -14,12 +14,12 @@ model Experience {
   subtitle    String
   location    String?
   date        String?
-  startDate   String?
-  endDate     String?
-  current     Boolean  @default(false)
   description String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  current     Boolean  @default(false)
+  endDate     String?
+  startDate   String?
 }
 
 model Education {
@@ -28,11 +28,11 @@ model Education {
   subtitle  String
   location  String?
   date      String?
-  startDate String?
-  endDate   String?
-  current   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  current   Boolean  @default(false)
+  endDate   String?
+  startDate String?
 }
 
 model Organization {
@@ -41,11 +41,11 @@ model Organization {
   subtitle  String
   location  String?
   date      String?
-  startDate String?
-  endDate   String?
-  current   Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  current   Boolean  @default(false)
+  endDate   String?
+  startDate String?
 }
 
 model Project {
@@ -54,49 +54,49 @@ model Project {
   subtitle    String
   location    String?
   date        String?
-  startDate   String?
-  endDate     String?
-  current     Boolean  @default(false)
   description String[]
   link        String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  current     Boolean  @default(false)
+  endDate     String?
+  startDate   String?
 }
 
 model Skill {
   id        String   @id @default(cuid())
   name      String
-  type      String   // "HARD" or "SOFT"
-  featured  Boolean  @default(false) // Featured on homepage
+  type      String
+  featured  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Certification {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
   issuer    String?
   link      String?
   issuedAt  DateTime?
   expiresAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Profile {
-  id          String   @id @default(cuid())
-  name        String
-  headline    String
-  bio         String
-  email       String
-  contactTitle String @default("Let's work together.")
-  contactDescription String @default("Available for freelance and full-time opportunities.")
-  github      String?
-  linkedin    String?
-  instagram   String?
-  twitter     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  name               String
+  headline           String
+  bio                String
+  email              String
+  contactTitle       String   @default("Let's work together.")
+  contactDescription String   @default("Available for freelance and full-time opportunities.")
+  github             String?
+  linkedin           String?
+  instagram          String?
+  twitter            String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
 model Visitor {
@@ -108,38 +108,38 @@ model Visitor {
 }
 
 model Insight {
-  id         String   @id @default(cuid())
-  title      String
-  slug       String   @unique
-  excerpt    String?
-  content    String   // Markdown or rich text
-  coverImage String?
-  published  Boolean  @default(false)
-  featured   Boolean  @default(false)
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  coverImage  String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  featured    Boolean  @default(false)
   notionEmbed String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 }
 
 model CaseStudy {
-  id         String   @id @default(cuid())
-  title      String
-  slug       String   @unique
-  summary    String?
-  content    String   // Markdown or rich text
-  coverImage String?
-  link       String?
-  published  Boolean  @default(false)
-  featured   Boolean  @default(false)
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  summary     String?
+  content     String
+  coverImage  String?
+  link        String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  featured    Boolean  @default(false)
   notionEmbed String?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
 }
 
 model CronLog {
   id        String   @id @default(cuid())
-  jobName   String   // Name of the cron job
-  status    String   // "SUCCESS" or "ERROR"
+  jobName   String
+  status    String
   message   String?
   createdAt DateTime @default(now())
 }
@@ -149,4 +149,69 @@ model SystemSettings {
   maintenanceActive  Boolean  @default(false)
   maintenanceMessage String?  @default("We're currently making some improvements to the site to bring you a better experience. We'll be back shortly!")
   updatedAt          DateTime @updatedAt
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String?
+  email         String?         @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  accounts      Account[]
+  Authenticator Authenticator[]
+  sessions      Session[]
+}
+
+model Account {
+  id                String   @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Authenticator {
+  credentialID         String  @unique
+  userId               String
+  providerAccountId    String
+  credentialPublicKey  String
+  counter              Int
+  credentialDeviceType String
+  credentialBackedUp   Boolean
+  transports           String?
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, credentialID])
 }

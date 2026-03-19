@@ -16,6 +16,9 @@ import {
 import { getVisitorStats } from "@/app/actions/analytics";
 import { getSettings } from "@/app/actions/settings";
 import { MaintenanceToggle } from "@/components/ui/maintenance-toggle";
+import PasskeyManagement from "@/components/ui/PasskeyManagement";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 
 const adminSections = [
     {
@@ -87,8 +90,16 @@ const adminSections = [
 export const revalidate = 0; // Ensure fresh stats
 
 export default async function AdminDashboard() {
+    const session = await auth();
     const stats = await getVisitorStats();
     const settings = await getSettings();
+
+    // Check for passkeys linked to the current user
+    const authenticatorCount = session?.user?.email 
+        ? await prisma.authenticator.count({
+            where: { user: { email: session.user.email } }
+          })
+        : 0;
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">
@@ -142,6 +153,9 @@ export default async function AdminDashboard() {
                     initialActive={settings.maintenanceActive} 
                     initialMessage={settings.maintenanceMessage || ""} 
                 />
+
+                {/* PASSKEY SECURITY */}
+                <PasskeyManagement hasPasskey={authenticatorCount > 0} />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {adminSections.map((section) => (
