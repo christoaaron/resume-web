@@ -60,6 +60,8 @@ export async function createCaseStudy(prevState: ActionState, formData: FormData
         });
 
         revalidatePath("/", "layout");
+        revalidatePath("/case-studies");
+        revalidatePath(`/case-studies/${data.slug}`);
         revalidateTag("case-studies", { expire: 0 });
         return { message: "Case Study created successfully", success: true };
     } catch (e: any) {
@@ -112,6 +114,8 @@ export async function updateCaseStudy(id: string, prevState: ActionState, formDa
         });
 
         revalidatePath("/", "layout");
+        revalidatePath("/case-studies");
+        revalidatePath(`/case-studies/${data.slug}`);
         revalidateTag("case-studies", { expire: 0 });
         return { message: "Case Study updated successfully", success: true };
     } catch (e: any) {

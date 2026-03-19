@@ -24,12 +24,26 @@ export function NotionEmbed({ content }: NotionEmbedProps) {
 
     // Use dark theme by default to match the site
     let urlString = baseUrl;
+    let isInvalidUrl = false;
+    
     try {
-        const url = new URL(baseUrl);
-        url.searchParams.set('theme', 'dark');
-        urlString = url.toString();
+        if (baseUrl.includes('notion.site')) {
+            const url = new URL(baseUrl);
+            url.searchParams.set('theme', 'dark');
+            urlString = url.toString();
+        }
     } catch (e) {
         console.error("Invalid Notion URL:", baseUrl);
+        isInvalidUrl = true;
+    }
+
+    if (isInvalidUrl && !isIframe) {
+        return (
+            <div className="w-full p-12 text-center border border-dashed border-border rounded-3xl bg-muted/5">
+                <p className="text-muted-foreground">Invalid Notion URL provided.</p>
+                <a href={baseUrl} target="_blank" className="text-primary text-sm underline mt-2 block">Try opening directly</a>
+            </div>
+        );
     }
 
     return (

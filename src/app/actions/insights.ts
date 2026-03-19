@@ -57,6 +57,8 @@ export async function createInsight(prevState: ActionState, formData: FormData):
         });
 
         revalidatePath("/", "layout");
+        revalidatePath("/insights");
+        revalidatePath(`/insights/${data.slug}`);
         revalidateTag("insights", { expire: 0 });
         return { message: "Insight created successfully", success: true };
     } catch (e: any) {
@@ -107,6 +109,8 @@ export async function updateInsight(id: string, prevState: ActionState, formData
         });
 
         revalidatePath("/", "layout");
+        revalidatePath("/insights");
+        revalidatePath(`/insights/${data.slug}`);
         revalidateTag("insights", { expire: 0 });
         return { message: "Insight updated successfully", success: true };
     } catch (e: any) {
