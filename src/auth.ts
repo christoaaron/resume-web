@@ -6,6 +6,7 @@ import { verifyTOTPToken } from "@/lib/totp"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
+    session: { strategy: "jwt" },
     providers: [
         Credentials({
             name: "TOTP",
@@ -31,9 +32,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }),
     ],
     callbacks: {
-        session: async ({ session, user }) => {
-            if (session.user && user) {
-                session.user.id = user.id;
+        jwt: async ({ token, user }) => {
+            if (user) {
+                token.id = user.id;
+            }
+            return token;
+        },
+        session: async ({ session, token }) => {
+            if (session.user) {
+                session.user.id = token.id as string;
             }
             return session;
         },

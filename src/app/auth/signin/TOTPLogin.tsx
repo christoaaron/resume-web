@@ -22,18 +22,15 @@ export default function TOTPLogin() {
         try {
             const result = await signIn("credentials", {
                 token,
-                redirect: false,
-                callbackUrl: "/admin"
+                callbackUrl: "/admin",
             });
 
             if (result?.error) {
                 setError("Invalid authentication code.");
-            } else {
-                window.location.href = "/admin";
+                setIsLoading(false);
             }
         } catch (err) {
             setError("An unexpected error occurred.");
-        } finally {
             setIsLoading(false);
         }
     };
