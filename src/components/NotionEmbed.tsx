@@ -22,6 +22,18 @@ export function NotionEmbed({ content }: NotionEmbedProps) {
 
     if (!baseUrl) return null;
 
+    // Auto-transform standard Notion links to embed-ready links if possible
+    // Standard: https://workspace.notion.site/Page-Name-ID
+    // Embed:    https://workspace.notion.site/ebd/ID
+    if (baseUrl.includes('notion.site') && !baseUrl.includes('/ebd/')) {
+        const idMatch = baseUrl.match(/-([a-f0-9]{32})(\?|$)/) || baseUrl.match(/\/([a-f0-9]{32})(\?|$)/);
+        if (idMatch) {
+            const id = idMatch[1];
+            const urlObj = new URL(baseUrl);
+            baseUrl = `${urlObj.origin}/ebd/${id}`;
+        }
+    }
+
     // Use dark theme by default to match the site
     let urlString = baseUrl;
     let isInvalidUrl = false;
