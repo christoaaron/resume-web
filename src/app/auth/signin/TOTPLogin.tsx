@@ -20,10 +20,10 @@ export default function TOTPLogin() {
         setError("");
         
         try {
-            const result = await signIn("credentials", {
+            const result = (await signIn("credentials", {
                 token,
                 callbackUrl: "/admin",
-            });
+            })) as any;
 
             if (result?.error) {
                 setError("Invalid authentication code.");
