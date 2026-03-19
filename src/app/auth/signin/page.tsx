@@ -1,24 +1,19 @@
 import { Card } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import SignInClient from "./SignInClient";
+import { getTOTPSetup } from "@/app/actions/auth";
+import TOTPLogin from "./TOTPLogin";
+import TOTPSetup from "./TOTPSetup";
+import SignInOrchestrator from "./SignInOrchestrator";
 import { LayoutDashboard } from "lucide-react";
 
 export default async function SignIn() {
-    // Check if any admin passkeys are registered
-    const authenticatorCount = await prisma.authenticator.count();
-    
-    // If no passkeys exist, we pre-create the admin user to allow "first-come-first-served" registration
-    const defaultEmail = "admin@example.com";
-    if (authenticatorCount === 0) {
-        await prisma.user.upsert({
-            where: { email: defaultEmail },
-            update: {},
-            create: {
-                name: "Administrator",
-                email: defaultEmail,
-            }
-        });
-    }
+    // Check if an admin with TOTP enabled already exists
+    const adminUser = await prisma.user.findFirst({
+        where: { twoFactorEnabled: true }
+    });
+
+    // If no admin, prepare setup data
+    const setupData = !adminUser ? await getTOTPSetup() : null;
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-6 relative overflow-hidden">
@@ -32,16 +27,19 @@ export default async function SignIn() {
                         <LayoutDashboard className="w-10 h-10 text-primary" />
                     </div>
                     <h1 className="text-4xl font-black tracking-tight mb-2">Portfolio Admin</h1>
-                    <p className="text-muted-foreground font-medium">Secure Biometric Access</p>
+                    <p className="text-muted-foreground font-medium">Authenticator Access</p>
                 </div>
 
                 <Card className="p-10 bg-card/50 backdrop-blur-xl border-border shadow-2xl rounded-[2.5rem]">
-                    <SignInClient hasPasskeys={authenticatorCount > 0} email={defaultEmail} />
+                    <SignInOrchestrator 
+                        isAdminSetup={!!adminUser}
+                        setupData={setupData}
+                    />
                 </Card>
 
                 <div className="text-center">
-                    <p className="text-xs text-muted-foreground/60 font-medium">
-                        © {new Date().getFullYear()} Christopher Aaron. All rights reserved.
+                    <p className="text-xs text-muted-foreground/60 font-medium tracking-wide">
+                        &copy; {new Date().getFullYear()} Christopher Aaron. All rights reserved.
                     </p>
                 </div>
             </div>

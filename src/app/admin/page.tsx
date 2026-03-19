@@ -16,7 +16,7 @@ import {
 import { getVisitorStats } from "@/app/actions/analytics";
 import { getSettings } from "@/app/actions/settings";
 import { MaintenanceToggle } from "@/components/ui/maintenance-toggle";
-import PasskeyManagement from "@/components/ui/PasskeyManagement";
+import TOTPManagement from "@/components/ui/TOTPManagement";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -94,8 +94,10 @@ export default async function AdminDashboard() {
     const stats = await getVisitorStats();
     const settings = await getSettings();
 
-    // Check if any admin passkeys are registered globally
-    const authenticatorCount = await prisma.authenticator.count();
+    // Check if TOTP is enabled globally for an admin
+    const adminUser = await prisma.user.findFirst({
+        where: { twoFactorEnabled: true }
+    });
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">
@@ -150,8 +152,8 @@ export default async function AdminDashboard() {
                     initialMessage={settings.maintenanceMessage || ""} 
                 />
 
-                {/* PASSKEY SECURITY */}
-                <PasskeyManagement hasPasskey={authenticatorCount > 0} />
+                {/* TOTP SECURITY */}
+                <TOTPManagement hasTOTP={!!adminUser} />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {adminSections.map((section) => (
