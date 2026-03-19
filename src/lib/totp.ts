@@ -1,20 +1,20 @@
-import { authenticator } from "otplib";
+import { TOTP, generateSecret, generateURI, verifySync } from "otplib";
 import qrcode from "qrcode";
 
 /**
  * Generates a random secret for TOTP.
  */
-export const generateTOTPSecret = () => authenticator.generateSecret();
+export const generateTOTPSecret = () => generateSecret();
 
 /**
  * Generates a QR code data URL for the given user email and secret.
  */
 export const generateTOTPQRCode = async (email: string, secret: string) => {
-    const otpauth = authenticator.keyuri(
-        email,
-        "Christopher Aaron Portfolio", // Service name
-        secret
-    );
+    const otpauth = generateURI({
+        secret,
+        label: email,
+        issuer: "Christopher Aaron Portfolio",
+    });
     return await qrcode.toDataURL(otpauth);
 };
 
@@ -22,5 +22,8 @@ export const generateTOTPQRCode = async (email: string, secret: string) => {
  * Verifies a 6-digit TOTP token against a secret.
  */
 export const verifyTOTPToken = (token: string, secret: string) => {
-    return authenticator.check(token, secret);
+    return verifySync({
+        token,
+        secret
+    });
 };
