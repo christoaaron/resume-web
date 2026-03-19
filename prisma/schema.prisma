@@ -116,6 +116,7 @@ model Insight {
   coverImage String?
   published  Boolean  @default(false)
   featured   Boolean  @default(false)
+  notionEmbed String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
@@ -130,6 +131,7 @@ model CaseStudy {
   link       String?
   published  Boolean  @default(false)
   featured   Boolean  @default(false)
+  notionEmbed String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }

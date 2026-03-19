@@ -6,7 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { NotionEmbed } from "@/components/NotionEmbed";
-import { cleanText } from "@/lib/utils";
+import { cleanText, stripHtml } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -77,7 +77,16 @@ export default async function InsightDetailPage({ params }: { params: Promise<{ 
 
                 {/* ── Full-width prose content ── */}
                 <div className="w-full max-w-5xl mx-auto px-0 md:px-6 lg:px-12">
-                    {post.content.startsWith('http') || post.content.includes('<iframe') ? (
+                    {post.notionEmbed ? (
+                        <div className="space-y-12">
+                            <NotionEmbed content={post.notionEmbed} />
+                            {post.content && stripHtml(post.content).length > 0 && (
+                                <div className="px-6 md:px-0">
+                                    <MarkdownRenderer content={post.content} />
+                                </div>
+                            )}
+                        </div>
+                    ) : post.content.startsWith('http') || post.content.includes('<iframe') ? (
                         <NotionEmbed content={post.content} />
                     ) : (
                         <MarkdownRenderer content={post.content} />

@@ -12,6 +12,7 @@ const CaseStudySchema = z.object({
     content: z.string().min(1, "Content is required"),
     coverImage: z.string().optional(),
     link: z.string().optional(),
+    notionEmbed: z.string().optional().nullable(),
     published: z.boolean().default(false),
     featured: z.boolean().default(false),
 });
@@ -25,6 +26,7 @@ export async function createCaseStudy(prevState: ActionState, formData: FormData
             content: formData.get("content"),
             coverImage: formData.get("coverImage"),
             link: formData.get("link"),
+            notionEmbed: formData.get("notionEmbed"),
             published: formData.get("published") === "true",
             featured: formData.get("featured") === "true",
         };
@@ -51,6 +53,7 @@ export async function createCaseStudy(prevState: ActionState, formData: FormData
                 content: data.content,
                 coverImage: data.coverImage || null,
                 link: data.link || null,
+                notionEmbed: data.notionEmbed || null,
                 published: data.published,
                 featured: data.featured,
             },
@@ -74,6 +77,7 @@ export async function updateCaseStudy(id: string, prevState: ActionState, formDa
             content: formData.get("content"),
             coverImage: formData.get("coverImage"),
             link: formData.get("link"),
+            notionEmbed: formData.get("notionEmbed"),
             published: formData.get("published") === "true",
             featured: formData.get("featured") === "true",
         };
@@ -101,6 +105,7 @@ export async function updateCaseStudy(id: string, prevState: ActionState, formDa
                 content: data.content,
                 coverImage: data.coverImage || null,
                 link: data.link || null,
+                notionEmbed: data.notionEmbed || null,
                 published: data.published,
                 featured: data.featured,
             },

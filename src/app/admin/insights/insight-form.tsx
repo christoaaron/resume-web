@@ -110,8 +110,21 @@ export function InsightForm({ initialData }: InsightFormProps) {
 
                 <div className="space-y-4">
                     <div className="flex flex-col gap-2">
-                        <label className="text-sm font-medium">Notion Link or Embed Code</label>
-                        <p className="text-xs text-muted-foreground">Paste the "Share to Web" link from Notion or an iframe embed code.</p>
+                        <label className="text-sm font-medium">Insight Content / Blog Post</label>
+                        <p className="text-xs text-muted-foreground">Write your thoughts or article here.</p>
+                    </div>
+                    <RichTextEditor 
+                        value={content} 
+                        onChange={setContent} 
+                        placeholder="Write your insight here..." 
+                    />
+                    <input type="hidden" name="content" value={content} />
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm font-medium">Notion Link or Embed Code (Recommended Method)</label>
+                        <p className="text-xs text-muted-foreground">Paste the "Share to Web" link from Notion or an iframe embed code. This will override the description above if provided.</p>
                     </div>
                     
                     <div className="bg-primary/5 border border-primary/10 rounded-xl p-4 flex gap-3">
@@ -127,12 +140,11 @@ export function InsightForm({ initialData }: InsightFormProps) {
                     </div>
 
                     <textarea
-                        name="content"
-                        rows={6}
-                        defaultValue={initialData?.content || ""}
+                        name="notionEmbed"
+                        rows={3}
+                        defaultValue={initialData?.notionEmbed || ""}
                         className="w-full bg-muted border border-border rounded-xl px-4 py-3 focus:ring-1 focus:ring-primary outline-none font-mono text-sm"
                         placeholder="https://www.notion.so/My-Post-..."
-                        required
                     />
                 </div>
 

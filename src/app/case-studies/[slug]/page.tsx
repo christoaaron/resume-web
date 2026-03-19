@@ -5,7 +5,8 @@ import Navbar from "@/components/ui/Navbar";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { QuillRenderer } from "@/components/QuillRenderer";
-import { cleanText } from "@/lib/utils";
+import { NotionEmbed } from "@/components/NotionEmbed";
+import { cleanText, stripHtml } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -85,34 +86,20 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
                     </div>
                 )}
 
-                {/* ── Full-width prose content ── */}
+                {/* ── Full-width content ── */}
                 <div className="w-full max-w-5xl mx-auto px-0 md:px-6 lg:px-12">
-                    {study.content.startsWith('http') || study.content.includes('<iframe') ? (
-                        <div className="w-full min-h-[800px] bg-card/10 rounded-3xl overflow-hidden border border-border/20 shadow-inner">
-                            {study.content.includes('<iframe') ? (
-                                <div 
-                                    className="w-full h-full [&>iframe]:w-full [&>iframe]:min-h-[800px] [&>iframe]:border-0"
-                                    dangerouslySetInnerHTML={{ __html: study.content }} 
-                                />
-                            ) : (
-                                <iframe 
-                                    src={study.content} 
-                                    className="w-full min-h-[800px] border-0 invert-[0.9] hue-rotate-180 brightness-90 contrast-110"
-                                    allow="clipboard-write"
-                                    loading="lazy"
-                                />
+                    {study.notionEmbed ? (
+                        <div className="space-y-12">
+                            <NotionEmbed content={study.notionEmbed} />
+                            {study.content && stripHtml(study.content).length > 0 && (
+                                <div className="px-6 md:px-0">
+                                    <h3 className="text-xl font-bold mb-6 opacity-50 uppercase tracking-widest text-center">Project Details</h3>
+                                    <QuillRenderer content={study.content} />
+                                </div>
                             )}
-                            <div className="p-4 text-center border-t border-border/10 bg-muted/20">
-                                <a 
-                                    href={study.content.match(/https?:\/\/[^\s<>"]+/)?.[0] || "#"} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="text-[10px] uppercase font-bold tracking-widest text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    Open directly in Notion
-                                </a>
-                            </div>
                         </div>
+                    ) : study.content.startsWith('http') || study.content.includes('<iframe') ? (
+                        <NotionEmbed content={study.content} />
                     ) : (
                         <QuillRenderer content={study.content} />
                     )}

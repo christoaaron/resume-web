@@ -11,6 +11,7 @@ const InsightSchema = z.object({
     excerpt: z.string().optional(),
     content: z.string().min(1, "Content is required"),
     coverImage: z.string().optional(),
+    notionEmbed: z.string().optional().nullable(),
     published: z.boolean().default(false),
     featured: z.boolean().default(false),
 });
@@ -23,6 +24,7 @@ export async function createInsight(prevState: ActionState, formData: FormData):
             excerpt: formData.get("excerpt"),
             content: formData.get("content"),
             coverImage: formData.get("coverImage"),
+            notionEmbed: formData.get("notionEmbed"),
             published: formData.get("published") === "true",
             featured: formData.get("featured") === "true",
         };
@@ -48,6 +50,7 @@ export async function createInsight(prevState: ActionState, formData: FormData):
                 excerpt: data.excerpt || null,
                 content: data.content,
                 coverImage: data.coverImage || null,
+                notionEmbed: data.notionEmbed || null,
                 published: data.published,
                 featured: data.featured,
             },
@@ -70,6 +73,7 @@ export async function updateInsight(id: string, prevState: ActionState, formData
             excerpt: formData.get("excerpt"),
             content: formData.get("content"),
             coverImage: formData.get("coverImage"),
+            notionEmbed: formData.get("notionEmbed"),
             published: formData.get("published") === "true",
             featured: formData.get("featured") === "true",
         };
@@ -96,6 +100,7 @@ export async function updateInsight(id: string, prevState: ActionState, formData
                 excerpt: data.excerpt || null,
                 content: data.content,
                 coverImage: data.coverImage || null,
+                notionEmbed: data.notionEmbed || null,
                 published: data.published,
                 featured: data.featured,
             },

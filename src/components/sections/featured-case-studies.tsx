@@ -40,7 +40,12 @@ export default function FeaturedCaseStudies({ data }: { data: CaseStudy[] }) {
                                 </Link>
                             </h2>
                             <p className="text-lg text-muted-foreground leading-relaxed">
-                                {stripHtml(study.summary || study.content).substring(0, 160)}...
+                                {study.summary 
+                                    ? stripHtml(study.summary).substring(0, 160) 
+                                    : (study.content && !study.content.startsWith('http') && !study.content.includes('<iframe'))
+                                        ? stripHtml(study.content).substring(0, 160)
+                                        : "Explore the full details of this project."
+                                }...
                             </p>
                             <div className="flex items-center gap-4 pt-4">
                                 <Link 
