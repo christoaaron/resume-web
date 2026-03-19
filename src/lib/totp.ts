@@ -22,8 +22,10 @@ export const generateTOTPQRCode = async (email: string, secret: string) => {
  * Verifies a 6-digit TOTP token against a secret.
  */
 export const verifyTOTPToken = (token: string, secret: string) => {
-    return verifySync({
+    const result = verifySync({
         token,
         secret
-    });
+    }) as { valid: boolean };
+    
+    return result.valid;
 };
