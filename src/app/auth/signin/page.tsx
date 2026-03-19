@@ -1,66 +1,37 @@
-"use client"
+import { Card } from "@/components/ui/card";
+import { prisma } from "@/lib/prisma";
+import SignInClient from "./SignInClient";
+import { LayoutDashboard } from "lucide-react";
 
-import { Card } from "@/components/ui/card"
-import { signIn } from "next-auth/react"
-import { useState } from "react"
-import { Fingerprint } from "lucide-react"
-
-export default function SignIn() {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-        await signIn("credentials", { username, password, redirectTo: "/admin" })
-    }
+export default async function SignIn() {
+    // Check if any admin passkeys are registered
+    const authenticatorCount = await prisma.authenticator.count();
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
-            <Card className="w-full max-w-md p-8 bg-card border-border">
-                <h1 className="text-2xl font-bold mb-6 text-center">Admin Login</h1>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Username</label>
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className="w-full bg-muted border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
-                        />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Password</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full bg-muted border border-border rounded-md px-3 py-2 text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
-                        />
-                    </div>
-                    <button
-                        type="submit"
-                        className="w-full bg-primary text-primary-foreground py-2 rounded-md hover:bg-primary/90 transition-colors"
-                    >
-                        Sign In
-                    </button>
-                    <div className="relative my-6">
-                        <div className="absolute inset-0 flex items-center">
-                            <span className="w-full border-t border-border"></span>
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
-                        </div>
-                    </div>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-6 relative overflow-hidden">
+            {/* Background Decoration */}
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -z-10" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-[120px] -z-10" />
 
-                    <button
-                        type="button"
-                        onClick={() => signIn("passkey", { redirectTo: "/admin" })}
-                        className="w-full flex items-center justify-center gap-2 border border-border py-2 rounded-md hover:bg-muted transition-colors font-medium"
-                    >
-                        <Fingerprint className="w-4 h-4 text-primary" /> Sign in with Passkey
-                    </button>
-                </form>
-            </Card>
+            <div className="w-full max-w-md space-y-8 relative z-10">
+                <div className="text-center group">
+                    <div className="inline-flex p-4 bg-primary/10 rounded-3xl mb-4 group-hover:scale-110 transition-transform duration-500">
+                        <LayoutDashboard className="w-10 h-10 text-primary" />
+                    </div>
+                    <h1 className="text-4xl font-black tracking-tight mb-2">Portfolio Admin</h1>
+                    <p className="text-muted-foreground font-medium">Secure Biometric Access</p>
+                </div>
+
+                <Card className="p-10 bg-card/50 backdrop-blur-xl border-border shadow-2xl rounded-[2.5rem]">
+                    <SignInClient hasPasskeys={authenticatorCount > 0} />
+                </Card>
+
+                <div className="text-center">
+                    <p className="text-xs text-muted-foreground/60 font-medium">
+                        © {new Date().getFullYear()} Christopher Aaron. All rights reserved.
+                    </p>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
