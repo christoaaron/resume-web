@@ -94,12 +94,8 @@ export default async function AdminDashboard() {
     const stats = await getVisitorStats();
     const settings = await getSettings();
 
-    // Check for passkeys linked to the current user
-    const authenticatorCount = session?.user?.email 
-        ? await prisma.authenticator.count({
-            where: { user: { email: session.user.email } }
-          })
-        : 0;
+    // Check if any admin passkeys are registered globally
+    const authenticatorCount = await prisma.authenticator.count();
 
     return (
         <div className="flex min-h-screen bg-background text-foreground">

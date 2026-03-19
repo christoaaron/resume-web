@@ -1,5 +1,4 @@
 import NextAuth from "next-auth"
-import Credentials from "next-auth/providers/credentials"
 import Passkey from "next-auth/providers/passkey"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/prisma"

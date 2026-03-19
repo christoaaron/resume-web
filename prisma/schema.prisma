@@ -160,8 +160,10 @@ model User {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   accounts      Account[]
-  Authenticator Authenticator[]
-  sessions      Session[]
+  Authenticator    Authenticator[]
+  sessions         Session[]
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean         @default(false)
 }
 
 model Account {
