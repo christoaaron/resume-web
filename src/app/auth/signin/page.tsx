@@ -6,6 +6,19 @@ import { LayoutDashboard } from "lucide-react";
 export default async function SignIn() {
     // Check if any admin passkeys are registered
     const authenticatorCount = await prisma.authenticator.count();
+    
+    // If no passkeys exist, we pre-create the admin user to allow "first-come-first-served" registration
+    const defaultEmail = "admin@example.com";
+    if (authenticatorCount === 0) {
+        await prisma.user.upsert({
+            where: { email: defaultEmail },
+            update: {},
+            create: {
+                name: "Administrator",
+                email: defaultEmail,
+            }
+        });
+    }
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-6 relative overflow-hidden">
@@ -23,7 +36,7 @@ export default async function SignIn() {
                 </div>
 
                 <Card className="p-10 bg-card/50 backdrop-blur-xl border-border shadow-2xl rounded-[2.5rem]">
-                    <SignInClient hasPasskeys={authenticatorCount > 0} />
+                    <SignInClient hasPasskeys={authenticatorCount > 0} email={defaultEmail} />
                 </Card>
 
                 <div className="text-center">

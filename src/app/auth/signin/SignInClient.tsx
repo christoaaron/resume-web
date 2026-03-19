@@ -1,9 +1,28 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Fingerprint, ShieldAlert, Sparkles } from "lucide-react";
+import { Fingerprint, ShieldAlert, Sparkles, Loader2 } from "lucide-react";
+import { useState } from "react";
 
-export default function SignInClient({ hasPasskeys }: { hasPasskeys: boolean }) {
+export default function SignInClient({ hasPasskeys, email }: { hasPasskeys: boolean; email: string }) {
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSignIn = async () => {
+        setIsLoading(true);
+        try {
+            await signIn("passkey", { 
+                action: hasPasskeys ? "authenticate" : "register",
+                email: hasPasskeys ? undefined : email,
+                redirectTo: "/admin"
+            });
+        } catch (error) {
+            console.error("Passkey error:", error);
+        } finally {
+            // We don't necessarily reset if redirecting, but for safety:
+            setIsLoading(false);
+        }
+    };
+
     return (
         <div className="space-y-6">
             {!hasPasskeys ? (
@@ -24,14 +43,17 @@ export default function SignInClient({ hasPasskeys }: { hasPasskeys: boolean }) 
 
             <button
                 type="button"
-                onClick={() => signIn("passkey", { action: hasPasskeys ? "authenticate" : "register", redirectTo: "/admin" })}
-                className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-primary/20 active:scale-[0.98] ${
+                disabled={isLoading}
+                onClick={handleSignIn}
+                className={`w-full flex items-center justify-center gap-3 py-4 rounded-2xl transition-all duration-300 font-bold text-lg shadow-lg hover:shadow-primary/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed ${
                     !hasPasskeys 
                         ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:brightness-110" 
                         : "bg-muted border border-border hover:bg-muted/80 hover:border-primary/50"
                 }`}
             >
-                {!hasPasskeys ? (
+                {isLoading ? (
+                    <Loader2 className="w-6 h-6 animate-spin" />
+                ) : !hasPasskeys ? (
                     <>
                         <Sparkles className="w-6 h-6 animate-pulse" />
                         Register Admin Passkey
